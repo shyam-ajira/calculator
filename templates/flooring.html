@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="floor-selector">
+    <label for="floor-number">Floor 1</label>
+    <button class="add-floor">+</button>
+</div>
+<div class="room-list">
+    <input type="checkbox" id="staircase" class="staircase-checkbox">
+    <label for="staircase" class="staircase-label">Staircase Cover Only</label>
+    
+    <table class="room-table">
+        <thead>
+            <tr>
+                <th>Room Type</th>
+                <th>Quantity</th>
+                <th>Flooring Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Repeat this block for each room type -->
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/bedrooms.svg' %}" alt="Bedroom Icon" class="room-icon">
+                    <label for="bedrooms">Bedroom</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/living.svg' %}" alt="Living Icon" class="room-icon">
+                    <label for="living">Living</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon">
+                    <label for="kitchen">Kitchen</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/dining.svg' %}" alt="Dining Icon" class="room-icon">
+                    <label for="dining">Dining</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon">
+                    <label for="bathroom">Bathroom</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/parking.svg' %}" alt="Parking Icon" class="room-icon">
+                    <label for="parking">Parking</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/pujaRoom.svg' %}" alt="Puja Icon" class="room-icon">
+                    <label for="puja">Puja Room</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon">
+                    <label for="laundry">Laundry Room</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="room-item">
+                <td>
+                    <img src="{% static '/icon/storeRoom.svg' %}" alt="Store Icon" class="room-icon">
+                    <label for="store">Store Room</label>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <button class="minus">-</button>
+                        <span class="quantity">0</span>
+                        <button class="plus">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="flooring-type">
+                        <select id="flooring" name="flooring">
+                            <option value="none">None</option>
+                            <option value="tile">Tile</option>
+                            <option value="granite">Granite</option>
+                            <option value="parquet">Parquet</option>
+                            <option value="sisou">Sisou</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button type="submit" class="submit-button">Submit</button>
+{% endblock content %}

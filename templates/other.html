@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <div class="form-content">
+            <div class="input-group">
+                <label for="finish">
+                    <img src="{% static '/icon/finish.svg' %}" alt="Finish Icon"> Compound Flooring
+                </label>
+                <select id="finish">
+                    <option value="" disabled selected>Select Materials</option>
+                    <option value="">Stone</option>
+                    <option value="">Block</option>
+                    <option value="">Tile</option>
+                    </select>
+            </div>
+
+            <div class="input-group">
+                <label for="staircase-flooring">
+                    <img src="{% static '/icon/staircasetype.svg' %}" alt="Staircase Icon"> Staircase Flooring Type
+                </label>
+                <select id="staircase-flooring">
+                    <option value="" disabled selected>Select Materials</option>
+                    <option value="tile">Tile</option>
+                <option value="granite">Granite</option>
+                <option value="parquet">Parquet</option>
+                <option value="sisou">Sisou</option>
+                    </select>
+            </div>
+
+            <div class="input-group">
+                <label for="window-type">
+                    <img src="{% static '/icon/windowtype.svg' %}" alt="Window Icon"> Window Type
+                </label>
+                 <select id="size" required>
+                <option value="" disabled selected>Select Materials</option>
+                <option>UPVC</option>
+                <option>Aluminum</option>
+                <option>Wood</option>
+            </select>
+            </div>
+        </div>
+
+        <button type="submit" class="next-button">Next</button>
+    </div>
+{% endblock content %}

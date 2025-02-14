@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <a href="#" class="back-button">←</a>
+            <img src="{% static 'mero_ghar_logo.png' %}" alt="Mero Ghar Logo" class="logo">
+        </div>
+
+        <div class="content">
+            <div class="image-area">
+                <div class="house-image">
+                    <img src="{% static 'house_placeholder.png' %}" alt="House Image">
+                </div>
+            </div>
+
+            <div class="text-area">
+                <p>तपाईंको घरको कुल उत्कृष्ट क्षेत्रः</p>
+                <p class="area-value">155 S.F.</p>
+            </div>
+
+            <div class="text-area">
+                <p>तपाईंलाई चाहिने कुल जमीन</p>
+                <p class="area-value">205 S.F. (2 पैसा, 2 दाम)</p>
+            </div>
+
+            <div class="unit-toggle">
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <span class="unit-label">Aana</span>
+            </div>
+        </div>
+
+        <button class="cost-info-button">Cost Information</button>
+    </div>
+{% endblock content %}

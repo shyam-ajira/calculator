@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="district">आफ्नो जिल्ला रोज्नुहोस् *</label>
+            <select id="district" name="district" required>
+                <option value="" disabled selected>Search and select District</option>
+                {% for district in districts %}
+                    <option value="{{ district.id }}">{{ district.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="local-body">आफ्नो स्थानिय निकाय चयन गर्नुहोस् *</label>
+            <select id="local-body" name="local-body" required disabled>
+                <option value="" disabled selected>Search and select Local Body</option>
+            </select>
+        </div>
+
+        <button type="submit" class="button">Save Location</button>
+    </form>
+
+    <script>
+        document.getElementById("district").addEventListener("change", function() {
+            let districtId = this.value;
+            let localBodySelect = document.getElementById("local-body");
+            localBodySelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+            localBodySelect.disabled = true;
+
+            fetch(`/get-municipalities/${districtId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    localBodySelect.innerHTML = '<option value="" disabled selected>Search and select Local Body</option>';
+                    data.forEach(municipality => {
+                        let option = document.createElement("option");
+                        option.value = municipality.id;
+                        option.textContent = municipality.name;
+                        localBodySelect.appendChild(option);
+                    });
+                    localBodySelect.disabled = false;
+                })
+                .catch(error => console.error("Error fetching municipalities:", error));
+        });
+    </script>
+{% endblock content %}

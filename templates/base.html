@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <title>Ajira Builders</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/img/logo.jpeg" alt="Logo" class="logo-image">
+        </div>
+        <p>Home Cost Calculator</p>
+        {% block content %}
+        
+        {% endblock %}
+    <script src="{% static 'js/script.js' %}"></script>
+    </div>
+</body>
+</html>

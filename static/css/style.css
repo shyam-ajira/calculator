@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins to the entire body */
+    background: url('/static/img/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.logo-image {
+    width: 300px;
+    height: 70px;
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: scale(1.1);
+}
+
+.container p {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: 400; /* Medium weight for better readability */
+    line-height: 1.6; /* Improve line spacing */
+    letter-spacing: 0.5px; /* Slight letter spacing for elegance */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+/* Ensure the select dropdown matches the input field */
+.form-group select {
+    appearance: none; /* Removes default arrow */
+    background: url('/static/img/arrow-down.png') no-repeat right 10px center; /* Add custom arrow */
+    background-size: 12px;
+    padding-right: 30px; /* Space for custom arrow */
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: #009ddc;
+    box-shadow: 0 0 8px rgba(0, 157, 220, 0.3);
+    outline: none;
+}
+
+.button {
+    background-color: #009ddc;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #007bbd;
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+/* Add the following CSS without changing the existing styles */
+
+/* Enhanced Styles for the floor plan input elements */
+
+/* Floor Selector */
+.floor-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.floor-selector label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.add-floor {
+    background-color: #009ddc;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.add-floor:hover {
+    background-color: #007bbd;
+}
+
+/* Room List */
+
+.room-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-top: 20px; /* Fixed excessive padding */
+    position: relative;
+
+}
+
+.staircase-checkbox {
+    margin-right: 8px;
+}
+
+.staircase-label {
+    font-size: 16px;
+    color: #555;
+    margin-right: 20px;
+}
+
+/* Room Item */
+.room-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.room-item:hover {
+    background-color: #f0f8ff;
+}
+
+.room-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 12px;
+}
+
+.room-item label {
+    font-size: 18px;
+    color: #333;
+    margin-right: auto;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control button {
+    background-color: #ddd;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    margin: 0 6px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background-color: #ccc;
+}
+
+.quantity {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Flooring Type Selection */
+.flooring-type {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.flooring-type label {
+    font-size: 16px;
+    color: #333;
+    margin-right: 12px;
+}
+
+.flooring-type select {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3e%3cpath fill='none' d='M0 0h24v24H0z'/%3e%3cpath d='M12 14l-4-4h8z' fill='rgba(51,51,51,1)'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px 18px;
+    padding-right: 36px;
+    transition: border-color 0.3s ease;
+}
+
+.flooring-type select:hover {
+    border-color: #009ddc;
+}
+
+.flooring-type select:focus {
+    outline: none;
+    border-color: #009ddc;
+    box-shadow: 0 0 5px rgba(0, 157, 220, 0.2);
+}
+
+/* Submit Button */
+.submit-button {
+    background-color: #009ddc;
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.submit-button:hover {
+    background-color: #007bbd;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 450px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .room-item {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .room-item label, .staircase-label {
+        margin-bottom: 8px;
+    }
+
+    .quantity-control {
+        margin-top: 10px;
+    }
+
+    .add-floor {
+        font-size: 16px;
+        padding: 8px 14px;
+    }
+}
+
+
+/* Styles for the "other" form */
+
+.title {
+    font-size: 1.5rem; /* Adjust as needed */
+    font-weight: 600; /* Adjust as needed */
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left; /* Align labels to the left */
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem; /* Adjust as needed */
+    color: #333;
+    margin-bottom: 8px; /* Adjust as needed */
+}
+
+.input-group label img {
+    width: 20px; /* Adjust icon size as needed */
+    height: 20px;
+    margin-right: 10px;
+}
+
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    background: url('/static/img/arrow-down.png') no-repeat right 10px center; /* Use static tag here */
+    background-size: 16px;
+    padding-right: 30px;
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.input-group select:focus {
+    border-color: #009ddc; /* Match your other focus styles */
+    box-shadow: 0 0 8px rgba(0, 157, 220, 0.3); /* Match your other focus styles */
+    outline: none;
+}
+
+.next-button {
+    background-color: #009ddc; /* Match your button color */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px; /* Match your button border-radius */
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Match your button transitions */
+    margin-top: 20px; /* Add some top margin */
+}
+
+.next-button:hover {
+    background-color: #007bbd; /* Match your button hover color */
+    transform: translateY(-2px); /* Match your button hover transform */
+}
+
+.next-button:active {
+    transform: translateY(0); /* Match your button active transform */
+}
+
+
+/* Media query for responsiveness (example) */
+@media (max-width: 450px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .input-group label {
+        flex-direction: column; /* Stack label and icon vertically */
+        align-items: flex-start;
+    }
+
+    .input-group label img {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+}
+
+/* Add the following CSS without changing the existing styles */
+
+/* Styles for the Area Calculation Page */
+
+.content {
+    text-align: center; /* Center the content */
+}
+
+.image-area {
+    margin-bottom: 20px;
+    /* Add any specific styling for the image area */
+}
+
+.house-image {
+    width: 200px; /* Adjust as needed */
+    height: auto;
+    margin: 0 auto; /* Center the image */
+    display: block; /* Make it a block element to center properly */
+}
+
+.house-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.text-area {
+    margin-bottom: 10px;
+}
+
+.text-area p {
+    margin: 0;
+    font-size: 1rem; /* Adjust as needed */
+    color: #333;
+}
+
+.area-value {
+    font-weight: bold;
+    font-size: 1.2rem; /* Adjust as needed */
+}
+
+.unit-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the toggle */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px; /* Rounded corners */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%; /* Circle */
+}
+
+input:checked + .slider {
+    background-color: #2196F3; /* Example color */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3; /* Example color */
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.unit-label {
+    margin-left: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.cost-info-button {
+    background-color: #007bff; /* Example color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
