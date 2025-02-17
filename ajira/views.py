@@ -76,7 +76,7 @@ def Other(request):
     return render(request, 'other.html')
 
 def Summary(request):
-    return render(request, 'space_cal.html')
+    return render(request, 'summary.html')
 
 def CostCalculation(request):
     return render(request, 'cost_cal.html')
