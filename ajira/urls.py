@@ -7,5 +7,7 @@ urlpatterns = [
     path('location/', LocationView, name='location'), 
     path('flooring/', Flooring, name='flooring'),  
     path('others/', Other, name='other'),  
-    path('calculation/', Calculation, name='calculation'),  
+    path('calculation/space/', SpaceCalculation, name='space_calculation'),  
+    path('calculation/cost/', CostCalculation, name='cost_calculation'),  
+
 ]

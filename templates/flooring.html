@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
+{% block body_class %}page-with-margin{% endblock %}
 {% load static %}
 {% block content %}
-<div class="floor-selector">
-    <label for="floor-number">Floor 1</label>
-    <button class="add-floor">+</button>
-</div>
 <div class="room-list">
-    <input type="checkbox" id="staircase" class="staircase-checkbox">
-    <label for="staircase" class="staircase-label">Staircase Cover Only</label>
     
     <table class="room-table">
         <thead>
@@ -70,7 +65,7 @@
             <tr class="room-item">
                 <td>
                     <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon">
-                    <label for="kitchen">Kitchen</label>
+                    <label for="kitchen">Kitchen, Dining</label>
                 </td>
                 <td>
                     <div class="quantity-control">
@@ -91,30 +86,7 @@
                     </div>
                 </td>
             </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/dining.svg' %}" alt="Dining Icon" class="room-icon">
-                    <label for="dining">Dining</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
+            
             <tr class="room-item">
                 <td>
                     <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon">
@@ -190,12 +162,12 @@
             <tr class="room-item">
                 <td>
                     <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon">
-                    <label for="laundry">Laundry Room</label>
+                    <label for="laundry" class="small-label">Laundry Room</label>
                 </td>
                 <td>
                     <div class="quantity-control">
                         <button class="minus">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">0</span> 
                         <button class="plus">+</button>
                     </div>
                 </td>
@@ -238,5 +210,123 @@
         </tbody>
     </table>
 </div>
+<div class="floor-selector">
+    <button class="floor-button" id="add-floor-button">Add Floor</button>
+    <button class="floor-button" id="remove-floor-button">Remove Floor</button>
+</div>
 <button type="submit" class="submit-button">Submit</button>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let floorCount = 1; // Track number of floors
+    
+        function updateQuantity(button) {
+            const quantitySpan = button.parentElement.querySelector('.quantity');
+            let currentQuantity = parseInt(quantitySpan.textContent);
+            if (button.classList.contains('plus')) {
+                currentQuantity++;
+            } else if (button.classList.contains('minus') && currentQuantity > 0) {
+                currentQuantity--;
+            }
+            quantitySpan.textContent = currentQuantity;
+        }
+    
+        function addQuantityListeners(container) {
+            const quantityButtons = container.querySelectorAll('.quantity-control button');
+            quantityButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    updateQuantity(button);
+                });
+            });
+        }
+    
+        function updateStaircaseVisibility() {
+            const allFloors = document.querySelectorAll('.floor-container');
+            allFloors.forEach(floor => {
+                const checkboxContainer = floor.querySelector('.staircase-container');
+                if (checkboxContainer) {
+                    checkboxContainer.style.display = 'none';
+                }
+            });
+    
+            if (allFloors.length > 0) {
+                const lastFloor = allFloors[allFloors.length - 1];
+                const lastCheckboxContainer = lastFloor.querySelector('.staircase-container');
+                if (lastCheckboxContainer) {
+                    lastCheckboxContainer.style.display = 'block';
+                }
+            }
+        }
+    
+        function handleStaircaseToggle(checkbox) {
+            const floorContainer = checkbox.closest('.floor-container');
+            const roomTable = floorContainer.querySelector('.room-table');
+    
+            if (checkbox.checked) {
+                roomTable.style.display = 'none'; // Hide rooms only in this floor
+            } else {
+                roomTable.style.display = 'table'; // Show rooms again
+            }
+        }
+    
+        function addNewFloor() {
+            floorCount++;
+            const roomList = document.querySelector('.room-list');
+    
+            const floorContainer = document.createElement('div');
+            floorContainer.classList.add('floor-container');
+            floorContainer.dataset.floorNumber = floorCount;
+    
+            const floorHeader = document.createElement('h2');
+            floorHeader.textContent = `Floor ${floorCount}`;
+            floorContainer.appendChild(floorHeader);
+    
+            const originalTable = document.querySelector('.room-table');
+            if (originalTable) {
+                const newTable = originalTable.cloneNode(true);
+                newTable.querySelectorAll('.quantity').forEach(span => (span.textContent = '0'));
+                floorContainer.appendChild(newTable);
+                addQuantityListeners(newTable);
+            }
+    
+            const staircaseContainer = document.createElement('div');
+            staircaseContainer.classList.add('staircase-container');
+            staircaseContainer.style.display = 'none';
+            staircaseContainer.innerHTML = `
+                <input type="checkbox" id="staircase-${floorCount}" class="staircase-checkbox">
+                <label for="staircase-${floorCount}" class="staircase-label">Staircase Cover Only</label>
+            `;
+            floorContainer.appendChild(staircaseContainer);
+    
+            const staircaseCheckbox = staircaseContainer.querySelector('.staircase-checkbox');
+            staircaseCheckbox.addEventListener('change', function () {
+                handleStaircaseToggle(this);
+            });
+    
+            roomList.appendChild(floorContainer);
+    
+            updateStaircaseVisibility();
+        }
+    
+        function removeLastFloor() {
+            const floors = document.querySelectorAll('.floor-container');
+            if (floors.length > 0) {
+                floors[floors.length - 1].remove();
+                floorCount--;
+                updateStaircaseVisibility();
+            }
+        }
+    
+        document.getElementById('add-floor-button').addEventListener('click', addNewFloor);
+        document.getElementById('remove-floor-button').addEventListener('click', removeLastFloor);
+    
+        addQuantityListeners(document);
+        updateStaircaseVisibility();
+    });
+    
+    
+    
+</script>
+
 {% endblock content %}

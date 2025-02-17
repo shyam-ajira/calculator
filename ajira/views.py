@@ -52,6 +52,10 @@ def Flooring(request):
 def Other(request):
     return render(request, 'other.html')
 
+def SpaceCalculation(request):
+    return render(request, 'space_cal.html')
 
-def Calculation(request):
-    return render(request, 'calculation.html')
+def CostCalculation(request):
+    return render(request, 'cost_cal.html')
+
+

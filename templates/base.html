@@ -7,7 +7,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <title>Ajira Builders</title>
 </head>
-<body>
+<body class="{% block body_class %} {% endblock %}">
     <div class="container">
         <div class="logo">
             <img src="/static/img/logo.jpeg" alt="Logo" class="logo-image">

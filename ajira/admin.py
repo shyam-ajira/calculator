@@ -17,9 +17,8 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Floor)
 class FloorAdmin(admin.ModelAdmin):
-    list_display = ('home','number', 'inquiry')
-    list_filter = ('inquiry',)
-
+    list_display = ('home','number',)
+    list_filter = ('number',)
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('room_type', 'floor', 'quantity', 'flooring_type')
