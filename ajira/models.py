@@ -38,6 +38,7 @@ class Municipality(models.Model):
         
 class Location(models.Model):
     home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='locations')
+    contact_number = models.CharField(max_length=13)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     municipality = models.ForeignKey(Municipality, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)

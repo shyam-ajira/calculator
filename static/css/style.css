@@ -8,22 +8,8 @@ html, body {
     height: 100%;
 }
 
-.room-list {
-    max-height: 94vh; 
-    overflow-y: auto; 
-    padding-bottom: 20px; 
-}
-
-/* Ensure floors don't get hidden when scrolling     width: 150px;
-*/
-.floor-container {
-    overflow: visible;
-    position: relative;
-    width: 100%;
-    margin-top: 8px;
-}
 body {
-    font-family: 'Poppins', sans-serif; /* Apply Poppins to the entire body */
+    font-family: 'Poppins', sans-serif; 
     background: url('/static/img/bg.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -79,9 +65,9 @@ body {
     font-size: 20px;
     color: #555;
     margin-bottom: 20px;
-    font-weight: 400; /* Medium weight for better readability */
-    line-height: 1.6; /* Improve line spacing */
-    letter-spacing: 0.5px; /* Slight letter spacing for elegance */
+    font-weight: 400; 
+    line-height: 1.6; 
+    letter-spacing: 0.5px;
 }
 
 .form-group {
@@ -103,15 +89,14 @@ body {
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    box-sizing: border-box; 
 }
 
-/* Ensure the select dropdown matches the input field */
 .form-group select {
-    appearance: none; /* Removes default arrow */
-    background: url('/static/img/arrow-down.png') no-repeat right 10px center; /* Add custom arrow */
+    appearance: none; 
+    background: url('/static/img/arrow-down.png') no-repeat right 10px center;
     background-size: 12px;
-    padding-right: 30px; /* Space for custom arrow */
+    padding-right: 30px; 
 }
 
 .form-group input:focus, .form-group select:focus {
@@ -140,12 +125,36 @@ body {
 .button:active {
     transform: translateY(0);
 }
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
 
-/* Add the following CSS without changing the existing styles */
+.messages li {
+    padding: 3px;
+    margin-bottom: -8px;
+    border-radius: 5px;
+    font-size: 13.5px;
+    text-align: center;
+}
 
-/* Enhanced Styles for the floor plan input elements */
+.messages .error {
+    background-color: #ffebee;
+    color: #c62828; 
+    border: 1px solid #c62828;
+}
 
-/* Floor Selector */
+p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+
+/* Start Floor Selector */
 
 .floor-selector {
     display: flex;
@@ -154,36 +163,47 @@ body {
     margin-bottom: -9px;
     margin-top: 8px;
 }
+.room-list {
+    max-height: 94vh; 
+    overflow-y: auto; 
+    padding-bottom: 20px; 
+}
 
+.floor-container {
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    margin-top: 8px;
+}
 .floor-button {
-    min-width: 132px; /* Ensures the button has a minimum size */
+    width: 150px;
     padding: 10px 15px; 
-    font-size: 16px; /* Sets the font size */
-    font-weight: bold; /* Makes the text bold */
-    color: #fff; /* White text color */
-    background-color: #007bff; /* Blue background color */
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Rounds the corners */
-    cursor: pointer; /* Changes the cursor to a pointer on hover */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-    text-align: center; /* Centers text */
-    white-space: nowrap; /* Prevents text wrapping */
+    font-size: 16px; 
+    font-weight: bold; 
+    color: #fff; 
+    background-color: #007bff;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    text-align: center; 
+    white-space: nowrap; 
 
 }
 
 .floor-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
 }
 
 .floor-button:active {
-    background-color: #004080; /* Even darker blue when clicked */
+    background-color: #004080; 
 }
 .page-with-margin body {
-    margin-top: 300px;  /* Add margin for this page only */
+    margin-top: 300px;  
 }
 
 .page-with-margin .container {
-    margin-top: 300px; /* Optionally adjust margin for the container */
+    margin-top: 300px; 
 }
 
 .floor-selector {
@@ -212,7 +232,6 @@ body {
     background-color: #0056b3;
 }
 
-/* Room Table */
 .room-table {
     width: 100%;
     border-collapse: collapse;
@@ -242,7 +261,6 @@ body {
     
 }
 
-/* Quantity Controls */
 .quantity-control {
     display: flex;
     align-items: center;
@@ -269,7 +287,6 @@ body {
     font-weight: bold;
 }
 
-/* Flooring Selection */
 .flooring-type {
     text-align: right;
     padding: 5px;
@@ -281,7 +298,6 @@ select {
     font-size: 14px;
 }
 
-/* Submit Button */
 .submit-button {
     display: block;
     width: 100%;
@@ -298,6 +314,8 @@ select {
 .submit-button:hover {
     background-color: #218838;
 }
+
+
 /* Styles for the "other" form */
 
 .title {
