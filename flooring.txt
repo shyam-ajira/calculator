@@ -341,3 +341,51 @@
     });
 </script>
 {% endblock content %}
+
+
+def FlooringView(request):
+    if request.method == 'POST':
+        home = Home.objects.first()  
+        floor_count = int(request.POST.get('floor_quantity', 1))
+        Floor.objects.create(home=home, number=floor_count)
+        bedrooms_quantity = request.POST.get('bedrooms_quantity')
+        bedrooms_flooring = request.POST.get('bedrooms_flooring')
+
+        living_quantity = request.POST.get('living_quantity')
+        living_flooring = request.POST.get('living_flooring')
+
+        kitchen_quantity = request.POST.get('kitchen_quantity')
+        kitchen_flooring = request.POST.get('kitchen_flooring')
+
+        bathroom_quantity = request.POST.get('bathroom_quantity')
+        bathroom_flooring = request.POST.get('bathroom_flooring')
+
+        parking_quantity = request.POST.get('parking_quantity')
+        parking_flooring = request.POST.get('parking_flooring')
+
+        puja_quantity = request.POST.get('puja_quantity')
+        puja_flooring = request.POST.get('puja_flooring')
+
+        laundry_quantity = request.POST.get('laundry_quantity')
+        laundry_flooring = request.POST.get('laundry_flooring')
+
+        store_quantity = request.POST.get('store_quantity')
+        store_flooring = request.POST.get('store_flooring')
+
+        floor_quantity = request.POST.get('floor_quantity')
+        staircase_quantity = request.POST.get('staircase_quantity')
+
+        print("Bedrooms:", bedrooms_quantity, bedrooms_flooring)
+        print("Living:", living_quantity, living_flooring)
+        print("Kitchen:", kitchen_quantity, kitchen_flooring)
+        print("Bathroom:", bathroom_quantity, bathroom_flooring)
+        print("Parking:", parking_quantity, parking_flooring)
+        print("Puja:", puja_quantity, puja_flooring)
+        print("Laundry:", laundry_quantity, laundry_flooring)
+        print("Store:", store_quantity, store_flooring)
+        print("Floors:", floor_quantity)  
+        print("Staircases:", staircase_quantity)
+
+        return redirect('flooring')
+    
+    return render(request, 'flooring.html')

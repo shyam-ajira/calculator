@@ -37,7 +37,7 @@ class Municipality(models.Model):
         return self.name
         
 class Location(models.Model):
-    home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='locations')
+    user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='locations')
     contact_number = models.CharField(max_length=13)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     municipality = models.ForeignKey(Municipality, on_delete=models.CASCADE)
@@ -48,10 +48,12 @@ class Location(models.Model):
     
 
 class Floor(models.Model):
-    home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='floors')
-    number = models.PositiveIntegerField()
-    
-   
+    user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='floor')
+    floor_number = models.PositiveIntegerField()
+    staircase = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Floor {self.floor_number}"
 
 class Room(models.Model):
     FLOORING_CHOICES = [
@@ -61,7 +63,7 @@ class Room(models.Model):
         ('parquet', 'Parquet'),
         ('sisou', 'Sisou'),
     ]
-    
+
     ROOM_TYPES = [
         ('bedroom', 'Bedroom'),
         ('living', 'Living'),
@@ -73,13 +75,12 @@ class Room(models.Model):
         ('laundry', 'Laundry Room'),
         ('store', 'Store Room'),
     ]
-    
+    user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='room')
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES)
     quantity = models.PositiveIntegerField(default=0)
     flooring_type = models.CharField(max_length=50, choices=FLOORING_CHOICES, default='none')
 
-    
     def __str__(self):
         return f"{self.room_type} - {self.floor} ({self.quantity})"
 
@@ -103,7 +104,7 @@ class Other(models.Model):
         ('wood', 'Wood'),
     ]
     
-    home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='other')
+    user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='other')
     compound_flooring = models.CharField(max_length=50, choices=MATERIAL_CHOICES, default='stone')
     staircase_flooring = models.CharField(max_length=50, choices=STAIRCASE_FLOORING_CHOICES, default='tile')
     window_type = models.CharField(max_length=50, choices=WINDOW_TYPES, default='upvc')

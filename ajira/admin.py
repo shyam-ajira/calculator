@@ -12,21 +12,22 @@ admin.site.register(Municipality)
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('home','district', 'municipality', 'submitted_at')
+    list_display = ('user_name','district', 'municipality', 'submitted_at')
     search_fields = ('district', 'municipality')
 
 @admin.register(Floor)
 class FloorAdmin(admin.ModelAdmin):
-    list_display = ('home','number',)
-    list_filter = ('number',)
+    list_display = ('user_name','floor_number','staircase',)
+    list_filter = ('floor_number',)
+    
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('room_type', 'floor', 'quantity', 'flooring_type')
+    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type')
     list_filter = ('room_type', 'flooring_type')
     search_fields = ('room_type',)
 
 @admin.register(Other)
 class AdditionalFeatureAdmin(admin.ModelAdmin):
-    list_display = ('home', 'compound_flooring', 'staircase_flooring', 'window_type')
+    list_display = ('user_name', 'compound_flooring', 'staircase_flooring', 'window_type')
     list_filter = ('compound_flooring', 'staircase_flooring', 'window_type')
     

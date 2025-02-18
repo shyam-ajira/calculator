@@ -53,18 +53,18 @@ def get_municipalities(request, district_id):
 def LocationView(request):
     districts = District.objects.all()
     
-    home = Home.objects.latest('submitted_at') 
+    user_name = Home.objects.latest('submitted_at') 
 
     if request.method == "POST":
         district_id = request.POST.get("district")
         municipality_id = request.POST.get("local-body")
         contact_number_id = request.POST.get("contact_number")
 
-        if district_id and municipality_id and home:
+        if district_id and municipality_id and user_name:
             district = District.objects.get(id=district_id)
             municipality = Municipality.objects.get(id=municipality_id)
 
-            Location.objects.create(home=home, district=district, municipality=municipality, contact_number=contact_number_id)
+            Location.objects.create(user_name=user_name, district=district, municipality=municipality, contact_number=contact_number_id)
             return redirect("flooring")
 
     return render(request, "location.html", {"districts": districts})
@@ -73,25 +73,101 @@ def LocationView(request):
 
 def FlooringView(request):
     if request.method == 'POST':
-        home = Home.objects.first()  
-        floor_count = int(request.POST.get('floor_quantity', 1))
-        Floor.objects.create(home=home, number=floor_count)
-        return redirect('flooring')
-    
+        user = Home.objects.first() 
+
+        floor_quantity = int(request.POST.get('floor_quantity', 0))
+        staircase_quantity = request.POST.get('staircase_quantity', 0)
+
+        staircase_exists = bool(int(staircase_quantity))
+
+        for floor_num in range(1, floor_quantity + 1):
+            floor, created = Floor.objects.get_or_create(
+                user_name=user, floor_number=floor_num,
+                defaults={'staircase': staircase_exists} 
+            )
+
+            if not created:
+                floor.staircase = staircase_exists
+                floor.save()
+
+            room_types = [
+                'bedroom', 'living', 'kitchen', 'bathroom', 'parking',
+                'puja', 'laundry', 'store'
+            ]
+
+            for room in room_types:
+                quantity = int(request.POST.get(f'{room}_quantity', 0))
+                flooring = request.POST.get(f'{room}_flooring', 'none')
+
+                if quantity > 0:
+                    Room.objects.update_or_create(
+                        user_name=user,
+                        floor=floor,
+                        room_type=room, 
+                        defaults={'quantity': quantity, 'flooring_type': flooring}
+                    )
+
+        return redirect('other')
+
     return render(request, 'flooring.html')
 
-def RoomView(request):
-    return render(request, 'flooring.html')
+# def FlooringView(request):
+#     if request.method == 'POST':
+
+#         # Room quantities and flooring types
+#         bedrooms_quantity = request.POST.get('bedrooms_quantity')
+#         bedrooms_flooring = request.POST.get('bedrooms_flooring')
+
+#         living_quantity = request.POST.get('living_quantity')
+#         living_flooring = request.POST.get('living_flooring')
+
+#         kitchen_quantity = request.POST.get('kitchen_quantity')
+#         kitchen_flooring = request.POST.get('kitchen_flooring')
+
+#         bathroom_quantity = request.POST.get('bathroom_quantity')
+#         bathroom_flooring = request.POST.get('bathroom_flooring')
+
+#         parking_quantity = request.POST.get('parking_quantity')
+#         parking_flooring = request.POST.get('parking_flooring')
+
+#         puja_quantity = request.POST.get('puja_quantity')
+#         puja_flooring = request.POST.get('puja_flooring')
+
+#         laundry_quantity = request.POST.get('laundry_quantity')
+#         laundry_flooring = request.POST.get('laundry_flooring')
+
+#         store_quantity = request.POST.get('store_quantity')
+#         store_flooring = request.POST.get('store_flooring')
+
+#         floor_quantity = request.POST.get('floor_quantity')
+#         staircase_quantity = request.POST.get('staircase_quantity')
+
+#         # Print quantities and flooring types
+#         print("Bedrooms:", bedrooms_quantity, "Flooring:", bedrooms_flooring)
+#         print("Living:", living_quantity, "Flooring:", living_flooring)
+#         print("Kitchen:", kitchen_quantity, "Flooring:", kitchen_flooring)
+#         print("Bathroom:", bathroom_quantity, "Flooring:", bathroom_flooring)
+#         print("Parking:", parking_quantity, "Flooring:", parking_flooring)
+#         print("Puja:", puja_quantity, "Flooring:", puja_flooring)
+#         print("Laundry:", laundry_quantity, "Flooring:", laundry_flooring)
+#         print("Store:", store_quantity, "Flooring:", store_flooring)
+#         print("Floors:", floor_quantity)  
+#         print("Staircases:", staircase_quantity)
+
+#         return redirect('flooring')
+    
+#     return render(request, 'flooring.html')
+
 
 def OtherView(request):
     if request.method == "POST":
         compound_flooring = request.POST.get('compound_flooring')
         staircase_flooring = request.POST.get('staircase_flooring')
         window_type = request.POST.get('window_type')
-        home = Home.objects.latest('submitted_at')  
+        user_name = Home.objects.latest('submitted_at')  
         
         Other.objects.create(
-            home=home,
+            user_name=user_name,
             compound_flooring=compound_flooring,
             staircase_flooring=staircase_flooring,
             window_type=window_type
