@@ -51,8 +51,7 @@ class Floor(models.Model):
     home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='floors')
     number = models.PositiveIntegerField()
     
-    def __str__(self):
-        return self.number
+   
 
 class Room(models.Model):
     FLOORING_CHOICES = [

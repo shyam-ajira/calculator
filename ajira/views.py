@@ -69,8 +69,9 @@ def LocationView(request):
     return render(request, "location.html", {"districts": districts})
 
 
-def Flooring(request):
+def FlooringView(request):
     return render(request, 'flooring.html')
+
 
 def Other(request):
     return render(request, 'other.html')
