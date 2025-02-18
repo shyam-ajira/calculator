@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import *
+from .forms import *
 
 # Create your views here.
 def HomeView(request):
@@ -69,10 +70,18 @@ def LocationView(request):
     return render(request, "location.html", {"districts": districts})
 
 
-def FlooringView(request):
 
+def FlooringView(request):
+    if request.method == 'POST':
+        home = Home.objects.first()  
+        floor_count = int(request.POST.get('floor_quantity', 1))
+        Floor.objects.create(home=home, number=floor_count)
+        return redirect('flooring')
+    
     return render(request, 'flooring.html')
 
+def RoomView(request):
+    return render(request, 'flooring.html')
 
 def OtherView(request):
     if request.method == "POST":

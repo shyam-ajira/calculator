@@ -2,218 +2,232 @@
 {% block body_class %}page-with-margin{% endblock %}
 {% load static %}
 {% block content %}
-<div class="room-list">
-    
-    <table class="room-table">
-        <thead>
-            <tr>
-                <th>Room Type</th>
-                <th>Quantity</th>
-                <th>Flooring Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/bedrooms.svg' %}" alt="Bedroom Icon" class="room-icon">
-                    <label for="bedrooms">Bedroom</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/living.svg' %}" alt="Living Icon" class="room-icon">
-                    <label for="living">Living</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon">
-                    <label for="kitchen">Kitchen, Dining</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon">
-                    <label for="bathroom">Bathroom</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/parking.svg' %}" alt="Parking Icon" class="room-icon">
-                    <label for="parking">Parking</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/pujaRoom.svg' %}" alt="Puja Icon" class="room-icon">
-                    <label for="puja">Puja Room</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon">
-                    <label for="laundry" class="small-label">Laundry Room</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span> 
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr class="room-item">
-                <td>
-                    <img src="{% static '/icon/storeRoom.svg' %}" alt="Store Icon" class="room-icon">
-                    <label for="store">Store Room</label>
-                </td>
-                <td>
-                    <div class="quantity-control">
-                        <button class="minus">-</button>
-                        <span class="quantity">0</span>
-                        <button class="plus">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="flooring-type">
-                        <select id="flooring" name="flooring">
-                            <option value="none">None</option>
-                            <option value="tile">Tile</option>
-                            <option value="granite">Granite</option>
-                            <option value="parquet">Parquet</option>
-                            <option value="sisou">Sisou</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="floor-selector">
-    <button class="floor-button" id="add-floor-button">Add Floor</button>
-    <button class="floor-button" id="remove-floor-button">Remove Floor</button>
-</div>
-<button type="submit" class="submit-button">Submit</button>
+<form method="POST" action="{% url 'flooring' %}">
+    {% csrf_token %}
+    <div class="room-list">
+        
+        <table class="room-table">
+            <thead>
+                <tr>
+                    <th>Room Type</th>
+                    <th>Quantity</th>
+                    <th>Flooring Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/bedrooms.svg' %}" alt="Bedroom Icon" class="room-icon">
+                        <label for="bedrooms">Bedroom</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity" id="bedrooms-quantity" name = "bedrooms_quantity">0</span>
+                            <input type="hidden" name="bedrooms_quantity" id="bedrooms_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="bedrooms_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/living.svg' %}" alt="Living Icon" class="room-icon">
+                        <label for="living">Living</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="living-quantity" name = "living_quantity">0</span>
+                            <input type="hidden" name="living_quantity" id="living_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="living_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon">
+                        <label for="kitchen">Kitchen, Dining</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button type = "button" class="minus">-</button>
+                            <span class="quantity" id="kitchen-quantity" name = "kitchen_quantity">0</span>
+                            <input type="hidden" name="kitchen_quantity" id="kitchen_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="kitchen_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon">
+                        <label for="bathroom">Bathroom</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="bathroom-quantity" name = "bathroom_quantity">0</span>
+                            <input type="hidden" name="bathroom_quantity" id="bathroom_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="bathroom_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/parking.svg' %}" alt="Parking Icon" class="room-icon">
+                        <label for="parking">Parking</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="parking-quantity" name = "parking_quantity">0</span>
+                            <input type="hidden" name="parking_quantity" id="parking_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="parking_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/pujaRoom.svg' %}" alt="Puja Icon" class="room-icon">
+                        <label for="puja">Puja Room</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="puja-quantity" name = "puja_quantity">0</span>
+                            <input type="hidden" name="puja_quantity" id="puja_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="puja_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon">
+                        <label for="laundry" class="small-label">Laundry Room</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="laundry-quantity" name = "laundry_quantity">0</span>
+                            <input type="hidden" name="laundry_quantity" id="laundry_quantity-hidden" class = "hiddenvalueforjs" value="0"> 
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="laundry_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/storeRoom.svg' %}" alt="Store Icon" class="room-icon">
+                        <label for="store">Store Room</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button  type = "button" class="minus">-</button>
+                            <span class="quantity" id="store-quantity" name = "store_quantity">0</span>
+                            <input type="hidden" name="store_quantity" id="store_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <button type = "button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="flooring" name="store_flooring">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="floor-selector">
+        <button type = "button" class="floor-button" id="add-floor-button">Add Floor</button>
+        <button type = "button" class="floor-button" id="remove-floor-button">Remove Floor</button>
+    </div>
+    <input type="hidden" name="floor_quantity" id="floor_quantity" value="1">
+    <input type="hidden" name="staircase_quantity" id="staircase_quantity" value="0">
+    <button type="submit" class="submit-button">Submit</button>
+</form>
 
 
 <script>
@@ -238,6 +252,9 @@
         
         function updateQuantity(button) {
             const quantitySpan = button.parentElement.querySelector('.quantity');
+            const hiddenQuantityInput = button.parentElement.querySelector('.hiddenvalueforjs');
+            console.log(quantitySpan);
+            console.log(hiddenQuantityInput);
             let currentQuantity = parseInt(quantitySpan.textContent);
             if (button.classList.contains('plus')) {
                 currentQuantity++;
@@ -245,6 +262,7 @@
                 currentQuantity--;
             }
             quantitySpan.textContent = currentQuantity;
+            hiddenQuantityInput.value = currentQuantity; 
         }
     
         function addQuantityListeners(container) {
@@ -280,8 +298,11 @@
     
             if (checkbox.checked) {
                 roomTable.style.display = 'none'; 
+                document.getElementById('staircase_quantity').value = 1;
             } else {
                 roomTable.style.display = 'table';
+                document.getElementById('staircase_quantity').value = 0;
+
             }
         }
     
@@ -322,6 +343,8 @@
             roomList.appendChild(floorContainer);
     
             updateStaircaseVisibility();
+            document.getElementById('floor_quantity').value = floorCount;
+
         }
     
         function removeLastFloor() {
@@ -330,6 +353,8 @@
                 floors[floors.length - 1].remove();
                 floorCount--;
                 updateStaircaseVisibility();
+                document.getElementById('floor_quantity').value = floorCount;
+
             }
         }
     

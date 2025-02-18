@@ -78,6 +78,7 @@ class Room(models.Model):
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES)
     quantity = models.PositiveIntegerField(default=0)
     flooring_type = models.CharField(max_length=50, choices=FLOORING_CHOICES, default='none')
+
     
     def __str__(self):
         return f"{self.room_type} - {self.floor} ({self.quantity})"
