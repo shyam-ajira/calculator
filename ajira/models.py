@@ -102,10 +102,10 @@ class Other(models.Model):
         ('wood', 'Wood'),
     ]
     
-    inquiry = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='features')
+    home = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='other')
     compound_flooring = models.CharField(max_length=50, choices=MATERIAL_CHOICES, default='stone')
     staircase_flooring = models.CharField(max_length=50, choices=STAIRCASE_FLOORING_CHOICES, default='tile')
     window_type = models.CharField(max_length=50, choices=WINDOW_TYPES, default='upvc')
     
     def __str__(self):
-        return f"Features for {self.inquiry.name}"
+        return f"Features for {self.home.name}"

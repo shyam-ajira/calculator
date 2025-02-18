@@ -1,45 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <form method="POST">
+        {% csrf_token %}
         <div class="form-content">
             <div class="input-group">
-                <label for="finish">
+                <label for="compound-flooring">
                     <img src="{% static '/icon/finish.svg' %}" alt="Finish Icon"> Compound Flooring
                 </label>
-                <select id="finish">
+                <select id="compound-flooring" name="compound_flooring" required>
                     <option value="" disabled selected>Select Materials</option>
-                    <option value="">Stone</option>
-                    <option value="">Block</option>
-                    <option value="">Tile</option>
-                    </select>
+                    <option value="stone">Stone</option>
+                    <option value="block">Block</option>
+                    <option value="tile">Tile</option>
+                </select>
             </div>
 
             <div class="input-group">
                 <label for="staircase-flooring">
                     <img src="{% static '/icon/staircasetype.svg' %}" alt="Staircase Icon"> Staircase Flooring Type
                 </label>
-                <select id="staircase-flooring">
+                <select id="staircase-flooring" name="staircase_flooring" required>
                     <option value="" disabled selected>Select Materials</option>
                     <option value="tile">Tile</option>
-                <option value="granite">Granite</option>
-                <option value="parquet">Parquet</option>
-                <option value="sisou">Sisou</option>
-                    </select>
+                    <option value="granite">Granite</option>
+                    <option value="parquet">Parquet</option>
+                    <option value="sisou">Sisou</option>
+                </select>
             </div>
 
             <div class="input-group">
                 <label for="window-type">
                     <img src="{% static '/icon/windowtype.svg' %}" alt="Window Icon"> Window Type
                 </label>
-                 <select id="size" required>
-                <option value="" disabled selected>Select Materials</option>
-                <option>UPVC</option>
-                <option>Aluminum</option>
-                <option>Wood</option>
-            </select>
+                <select id="window-type" name="window_type" required>
+                    <option value="" disabled selected>Select Materials</option>
+                    <option value="upvc">UPVC</option>
+                    <option value="aluminum">Aluminum</option>
+                    <option value="wood">Wood</option>
+                </select>
             </div>
         </div>
 
         <button type="submit" class="next-button">Next</button>
-    </div>
+    </form>
 {% endblock content %}

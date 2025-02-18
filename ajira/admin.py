@@ -27,6 +27,6 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Other)
 class AdditionalFeatureAdmin(admin.ModelAdmin):
-    list_display = ('inquiry', 'compound_flooring', 'staircase_flooring', 'window_type')
+    list_display = ('home', 'compound_flooring', 'staircase_flooring', 'window_type')
     list_filter = ('compound_flooring', 'staircase_flooring', 'window_type')
     

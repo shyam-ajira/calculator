@@ -70,10 +70,24 @@ def LocationView(request):
 
 
 def FlooringView(request):
+
     return render(request, 'flooring.html')
 
 
-def Other(request):
+def OtherView(request):
+    if request.method == "POST":
+        compound_flooring = request.POST.get('compound_flooring')
+        staircase_flooring = request.POST.get('staircase_flooring')
+        window_type = request.POST.get('window_type')
+        home = Home.objects.latest('submitted_at')  
+        
+        Other.objects.create(
+            home=home,
+            compound_flooring=compound_flooring,
+            staircase_flooring=staircase_flooring,
+            window_type=window_type
+        )
+        return redirect('summary')  
     return render(request, 'other.html')
 
 def Summary(request):
