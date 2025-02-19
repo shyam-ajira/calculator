@@ -110,4 +110,4 @@ class Other(models.Model):
     window_type = models.CharField(max_length=50, choices=WINDOW_TYPES, default='upvc')
     
     def __str__(self):
-        return f"Features for {self.home.name}"
+        return f"Features for {self.user_name.name}"

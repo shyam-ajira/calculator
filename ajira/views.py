@@ -70,93 +70,112 @@ def LocationView(request):
     return render(request, "location.html", {"districts": districts})
 
 
-
 def FlooringView(request):
     if request.method == 'POST':
-        user = Home.objects.latest('submitted_at') 
+        # Get the latest Home instance (ensure this is correct for your use case)
+        user = Home.objects.latest('submitted_at')
 
+        # Retrieve the number of floors and staircase information from the form
         floor_quantity = int(request.POST.get('floor_quantity', 0))
-        staircase_quantity = request.POST.get('staircase_quantity', 0)
+        staircase_quantity = int(request.POST.get('staircase_quantity', 0))
 
-        staircase_exists = bool(int(staircase_quantity))
+        # Determine if a staircase exists based on user input
+        staircase_exists = bool(staircase_quantity)
 
+        # Loop through each floor number
         for floor_num in range(1, floor_quantity + 1):
+            # Create or update the Floor instance
             floor, created = Floor.objects.get_or_create(
-                user_name=user, floor_number=floor_num,
-                defaults={'staircase': staircase_exists} 
+                user_name=user,
+                floor_number=floor_num,
+                defaults={'staircase': staircase_exists}
             )
 
+            # If the floor already exists, update its staircase status
             if not created:
                 floor.staircase = staircase_exists
                 floor.save()
 
-            room_types = [
-                'bedroom', 'living', 'kitchen', 'bathroom', 'parking',
-                'puja', 'laundry', 'store'
-            ]
+            # Define room types to iterate over
+            room_types = ['bedroom', 'living', 'kitchen', 'bathroom', 'parking', 'puja', 'laundry', 'store']
 
+            # Loop through each room type to get quantities and flooring types
             for room in room_types:
-                quantity = int(request.POST.get(f'{room}_quantity', 0))
-                flooring = request.POST.get(f'{room}_flooring', 'none')
+                # Retrieve quantity and flooring type for this specific floor
+                quantity = int(request.POST.get(f'{room}_quantity_floor{floor_num}', 0))  # Ensure to use the correct key
+                flooring = request.POST.get(f'{room}_flooring_floor{floor_num}', 'none')  # Ensure to use the correct key
 
+                # Only create or update Room instances if quantity is greater than zero
                 if quantity > 0:
                     Room.objects.update_or_create(
                         user_name=user,
                         floor=floor,
-                        room_type=room, 
+                        room_type=room,
                         defaults={'quantity': quantity, 'flooring_type': flooring}
                     )
 
-        return redirect('other')
+        return redirect('other')  # Redirect after processing
 
     return render(request, 'flooring.html')
 
+
 # def FlooringView(request):
 #     if request.method == 'POST':
+#         floor_quantity = int(request.POST.get('floor_quantity', 1))
+#         staircase_quantity = int(request.POST.get('staircase_quantity', 0))
 
-#         # Room quantities and flooring types
-#         bedrooms_quantity = request.POST.get('bedrooms_quantity')
-#         bedrooms_flooring = request.POST.get('bedrooms_flooring')
+#         # Initialize a list to hold the data for each floor
+#         floors_data = []
 
-#         living_quantity = request.POST.get('living_quantity')
-#         living_flooring = request.POST.get('living_flooring')
+#         for floor in range(1, floor_quantity + 1):
+#             # Retrieve quantities and flooring types for each room type per floor
+#             # bedrooms_quantity = int(request.POST.get(f'bedroom_quantity', 0))
+#             bedrooms_quantity = int(request.POST.get(f'bedroom_quantity_floor{floor}', 0))
+#             bedrooms_flooring = request.POST.get(f'bedroom_flooring_floor{floor}', 'none')
 
-#         kitchen_quantity = request.POST.get('kitchen_quantity')
-#         kitchen_flooring = request.POST.get('kitchen_flooring')
+#             living_quantity = int(request.POST.get(f'living_quantity_floor{floor}', 0))
+#             living_flooring = request.POST.get(f'living_flooring_floor{floor}', 'none')
 
-#         bathroom_quantity = request.POST.get('bathroom_quantity')
-#         bathroom_flooring = request.POST.get('bathroom_flooring')
+#             kitchen_quantity = int(request.POST.get(f'kitchen_quantity_floor{floor}', 0))
+#             kitchen_flooring = request.POST.get(f'kitchen_flooring_floor{floor}', 'none')
 
-#         parking_quantity = request.POST.get('parking_quantity')
-#         parking_flooring = request.POST.get('parking_flooring')
+#             bathroom_quantity = int(request.POST.get(f'bathroom_quantity_floor{floor}', 0))
+#             bathroom_flooring = request.POST.get(f'bathroom_flooring_floor{floor}', 'none')
 
-#         puja_quantity = request.POST.get('puja_quantity')
-#         puja_flooring = request.POST.get('puja_flooring')
+#             parking_quantity = int(request.POST.get(f'parking_quantity_floor{floor}', 0))
+#             parking_flooring = request.POST.get(f'parking_flooring_floor{floor}', 'none')
 
-#         laundry_quantity = request.POST.get('laundry_quantity')
-#         laundry_flooring = request.POST.get('laundry_flooring')
+#             puja_quantity = int(request.POST.get(f'puja_quantity_floor{floor}', 0))
+#             puja_flooring = request.POST.get(f'puja_flooring_floor{floor}', 'none')
 
-#         store_quantity = request.POST.get('store_quantity')
-#         store_flooring = request.POST.get('store_flooring')
+#             laundry_quantity = int(request.POST.get(f'laundry_quantity_floor{floor}', 0))
+#             laundry_flooring = request.POST.get(f'laundry_flooring_floor{floor}', 'none')
 
-#         floor_quantity = request.POST.get('floor_quantity')
-#         staircase_quantity = request.POST.get('staircase_quantity')
+#             store_quantity = int(request.POST.get(f'store_quantity_floor{floor}', 0))
+#             store_flooring = request.POST.get(f'store_flooring_floor{floor}', 'none')
 
-#         # Print quantities and flooring types
-#         print("Bedrooms:", bedrooms_quantity, "Flooring:", bedrooms_flooring)
-#         print("Living:", living_quantity, "Flooring:", living_flooring)
-#         print("Kitchen:", kitchen_quantity, "Flooring:", kitchen_flooring)
-#         print("Bathroom:", bathroom_quantity, "Flooring:", bathroom_flooring)
-#         print("Parking:", parking_quantity, "Flooring:", parking_flooring)
-#         print("Puja:", puja_quantity, "Flooring:", puja_flooring)
-#         print("Laundry:", laundry_quantity, "Flooring:", laundry_flooring)
-#         print("Store:", store_quantity, "Flooring:", store_flooring)
-#         print("Floors:", floor_quantity)  
-#         print("Staircases:", staircase_quantity)
+#             # Collect data for this floor
+#             floor_data = {
+#                 "floor": floor,
+#                 "bedrooms": {"quantity": bedrooms_quantity, "flooring": bedrooms_flooring},
+#                 "living": {"quantity": living_quantity, "flooring": living_flooring},
+#                 "kitchen": {"quantity": kitchen_quantity, "flooring": kitchen_flooring},
+#                 "bathroom": {"quantity": bathroom_quantity, "flooring": bathroom_flooring},
+#                 "parking": {"quantity": parking_quantity, "flooring": parking_flooring},
+#                 "puja": {"quantity": puja_quantity, "flooring": puja_flooring},
+#                 "laundry": {"quantity": laundry_quantity, "flooring": laundry_flooring},
+#                 "store": {"quantity": store_quantity, "flooring": store_flooring},
+#             }
 
-#         return redirect('flooring')
-    
+#             floors_data.append(floor_data)
+
+#         print("Floor Data:", floors_data)  # Debugging output
+
+#         return redirect('flooring')  # Redirect after processing
+
 #     return render(request, 'flooring.html')
+
+
 
 
 def OtherView(request):

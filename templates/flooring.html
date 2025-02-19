@@ -4,8 +4,8 @@
 {% block content %}
 <form method="POST" action="{% url 'flooring' %}">
     {% csrf_token %}
-    <div class="room-list">
-        
+    <div class="room-list" data-floor-number="1">
+
         <table class="room-table">
             <thead>
                 <tr>
@@ -17,20 +17,20 @@
             <tbody>
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/bedroom.svg' %}" alt="Bedroom Icon" class="room-icon">
-                        <label for="bedroom">Bedroom</label>
+                        <img src="{% static '/icon/bedroom.svg' %}" alt="Bedroom Icon" class="room-icon" id="bedroomIcon">
+                        <label>Bedroom</label>
                     </td>
                     <td>
                         <div class="quantity-control">
                             <button type="button" class="minus">-</button>
-                            <span class="quantity" id="bedroom-quantity" name = "bedroom_quantity">0</span>
-                            <input type="hidden" name="bedroom_quantity" id="bedroom_quantity-hidden" class = "hiddenvalueforjs" value="0">
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="bedroom_quantity_floor1" id="bedroom_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
                             <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="bedroom_flooring">
+                            <select id="bedroom_flooring_floor1" name="bedroom_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -40,74 +40,23 @@
                         </div>
                     </td>
                 </tr>
-                
+
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/living.svg' %}" alt="Living Icon" class="room-icon">
-                        <label for="living">Living</label>
+                        <img src="{% static '/icon/living.svg' %}" alt="Living Icon" class="room-icon" id="livingIcon">
+                        <label>Living</label>
                     </td>
                     <td>
                         <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="living-quantity" name = "living_quantity">0</span>
-                            <input type="hidden" name="living_quantity" id="living_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="living_quantity_floor1" id="living_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="living_flooring">
-                                <option value="none">None</option>
-                                <option value="tile">Tile</option>
-                                <option value="granite">Granite</option>
-                                <option value="parquet">Parquet</option>
-                                <option value="sisou">Sisou</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="room-item">
-                    <td>
-                        <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon">
-                        <label for="kitchen">Kitchen, Dining</label>
-                    </td>
-                    <td>
-                        <div class="quantity-control">
-                            <button type = "button" class="minus">-</button>
-                            <span class="quantity" id="kitchen-quantity" name = "kitchen_quantity">0</span>
-                            <input type="hidden" name="kitchen_quantity" id="kitchen_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flooring-type">
-                            <select id="flooring" name="kitchen_flooring">
-                                <option value="none">None</option>
-                                <option value="tile">Tile</option>
-                                <option value="granite">Granite</option>
-                                <option value="parquet">Parquet</option>
-                                <option value="sisou">Sisou</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                
-                <tr class="room-item">
-                    <td>
-                        <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon">
-                        <label for="bathroom">Bathroom</label>
-                    </td>
-                    <td>
-                        <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="bathroom-quantity" name = "bathroom_quantity">0</span>
-                            <input type="hidden" name="bathroom_quantity" id="bathroom_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="flooring-type">
-                            <select id="flooring" name="bathroom_flooring">
+                            <select id="living_flooring_floor1" name="living_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -119,20 +68,46 @@
                 </tr>
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/parking.svg' %}" alt="Parking Icon" class="room-icon">
-                        <label for="parking">Parking</label>
+                        <img src="{% static '/icon/kitchen.svg' %}" alt="Kitchen Icon" class="room-icon" id="kitchenIcon">
+                        <label>Kitchen, Dining</label>
                     </td>
                     <td>
                         <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="parking-quantity" name = "parking_quantity">0</span>
-                            <input type="hidden" name="parking_quantity" id="parking_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="kitchen_quantity_floor1" id="kitchen_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="parking_flooring">
+                            <select id="kitchen_flooring_floor1" name="kitchen_flooring_floor1">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/bathroom.svg' %}" alt="Bathroom Icon" class="room-icon" id="bathroomIcon">
+                        <label>Bathroom</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="bathroom_quantity_floor1" id="bathroom_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="bathroom_flooring_floor1" name="bathroom_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -144,20 +119,20 @@
                 </tr>
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/pujaRoom.svg' %}" alt="Puja Icon" class="room-icon">
-                        <label for="puja">Puja Room</label>
+                        <img src="{% static '/icon/parking.svg' %}" alt="Parking Icon" class="room-icon" id="parkingIcon">
+                        <label>Parking</label>
                     </td>
                     <td>
                         <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="puja-quantity" name = "puja_quantity">0</span>
-                            <input type="hidden" name="puja_quantity" id="puja_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button"  class="plus">+</button>
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="parking_quantity_floor1" id="parking_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="puja_flooring">
+                            <select id="parking_flooring_floor1" name="parking_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -169,20 +144,20 @@
                 </tr>
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon">
-                        <label for="laundry" class="small-label">Laundry Room</label>
+                        <img src="{% static '/icon/pujaRoom.svg' %}" alt="Puja Icon" class="room-icon" id="pujaIcon">
+                        <label>Puja Room</label>
                     </td>
                     <td>
                         <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="laundry-quantity" name = "laundry_quantity">0</span>
-                            <input type="hidden" name="laundry_quantity" id="laundry_quantity-hidden" class = "hiddenvalueforjs" value="0"> 
-                            <button type = "button" class="plus">+</button>
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="puja_quantity_floor1" id="puja_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="laundry_flooring">
+                            <select id="puja_flooring_floor1" name="puja_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -194,20 +169,45 @@
                 </tr>
                 <tr class="room-item">
                     <td>
-                        <img src="{% static '/icon/storeRoom.svg' %}" alt="Store Icon" class="room-icon">
-                        <label for="store">Store Room</label>
+                        <img src="{% static '/icon/laundryRoom.svg' %}" alt="Laundry Icon" class="room-icon" id="laundryIcon">
+                        <label class="small-label">Laundry Room</label>
                     </td>
                     <td>
                         <div class="quantity-control">
-                            <button  type = "button" class="minus">-</button>
-                            <span class="quantity" id="store-quantity" name = "store_quantity">0</span>
-                            <input type="hidden" name="store_quantity" id="store_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="laundry_quantity_floor1" id="laundry_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
                         </div>
                     </td>
                     <td>
                         <div class="flooring-type">
-                            <select id="flooring" name="store_flooring">
+                            <select id="laundry_flooring_floor1" name="laundry_flooring_floor1">
+                                <option value="none">None</option>
+                                <option value="tile">Tile</option>
+                                <option value="granite">Granite</option>
+                                <option value="parquet">Parquet</option>
+                                <option value="sisou">Sisou</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="room-item">
+                    <td>
+                        <img src="{% static '/icon/storeRoom.svg' %}" alt="Store Icon" class="room-icon" id="storeIcon">
+                        <label>Store Room</label>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button type="button" class="minus">-</button>
+                            <span class="quantity">0</span>
+                            <input type="hidden" name="store_quantity_floor1" id="store_quantity-hidden_floor1" class="hiddenvalueforjs" value="0">
+                            <button type="button" class="plus">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flooring-type">
+                            <select id="store_flooring_floor1" name="store_flooring_floor1">
                                 <option value="none">None</option>
                                 <option value="tile">Tile</option>
                                 <option value="granite">Granite</option>
@@ -221,8 +221,8 @@
         </table>
     </div>
     <div class="floor-selector">
-        <button type = "button" class="floor-button" id="add-floor-button">Add Floor</button>
-        <button type = "button" class="floor-button" id="remove-floor-button">Remove Floor</button>
+        <button type="button" class="floor-button" id="add-floor-button">Add Floor</button>
+        <button type="button" class="floor-button" id="remove-floor-button">Remove Floor</button>
     </div>
     <input type="hidden" name="floor_quantity" id="floor_quantity" value="1">
     <input type="hidden" name="staircase_quantity" id="staircase_quantity" value="0">
@@ -231,25 +231,31 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         let floorCount = 1;
 
-        function getFloorName(floorNumber) {
-            if (floorNumber === 1) {
-                return "Ground Floor";
-            } else if (floorNumber === 2) {
-                return "First Floor";
-            } else if (floorNumber === 3) {
-                return "Second Floor";
-            } else if (floorNumber === 4) {
-                return "Third Floor";
-            } else if (floorNumber === 5) {
-                return "Fourth Floor";
-            } else if (floorNumber === 6) {
-                return "Fifth Floor";
-            } 
+    function getOrdinalSuffix(number) {
+        if (number > 3 && number < 21) return 'th';
+        switch (number % 10) {
+            case 1:
+                return 'st';
+            case 2:
+                return 'nd';
+            case 3:
+                return 'rd';
+            default:
+                return 'th';
         }
-        
+    }
+
+    function getFloorName(floorNumber) {
+        if (floorNumber === 1) {
+            return "Ground Floor";
+        } else {
+            return `${floorNumber - 1}${getOrdinalSuffix(floorNumber - 1)} Floor`;
+            }
+    }
+
         function updateQuantity(button) {
             const quantitySpan = button.parentElement.querySelector('.quantity');
             const hiddenQuantityInput = button.parentElement.querySelector('.hiddenvalueforjs');
@@ -262,19 +268,18 @@
                 currentQuantity--;
             }
             quantitySpan.textContent = currentQuantity;
-            hiddenQuantityInput.value = currentQuantity; 
+            hiddenQuantityInput.value = currentQuantity;
         }
-    
+
         function addQuantityListeners(container) {
             const quantityButtons = container.querySelectorAll('.quantity-control button');
-            console.log(quantityButtons);
             quantityButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     updateQuantity(button);
                 });
             });
         }
-    
+
         function updateStaircaseVisibility() {
             const allFloors = document.querySelectorAll('.floor-container');
             allFloors.forEach(floor => {
@@ -283,7 +288,7 @@
                     checkboxContainer.style.display = 'none';
                 }
             });
-    
+
             if (allFloors.length > 0) {
                 const lastFloor = allFloors[allFloors.length - 1];
                 const lastCheckboxContainer = lastFloor.querySelector('.staircase-container');
@@ -292,13 +297,13 @@
                 }
             }
         }
-    
+
         function handleStaircaseToggle(checkbox) {
             const floorContainer = checkbox.closest('.floor-container');
             const roomTable = floorContainer.querySelector('.room-table');
-    
+
             if (checkbox.checked) {
-                roomTable.style.display = 'none'; 
+                roomTable.style.display = 'none';
                 document.getElementById('staircase_quantity').value = 1;
             } else {
                 roomTable.style.display = 'table';
@@ -306,27 +311,43 @@
 
             }
         }
-    
+
         function addNewFloor() {
             floorCount++;
             const roomList = document.querySelector('.room-list');
-    
+
             const floorContainer = document.createElement('div');
             floorContainer.classList.add('floor-container');
             floorContainer.dataset.floorNumber = floorCount;
-    
+
             const floorHeader = document.createElement('h2');
-            floorHeader.textContent = getFloorName(floorCount); 
+            floorHeader.textContent = getFloorName(floorCount);
             floorContainer.appendChild(floorHeader);
-    
+
             const originalTable = document.querySelector('.room-table');
             if (originalTable) {
                 const newTable = originalTable.cloneNode(true);
                 newTable.querySelectorAll('.quantity').forEach(span => (span.textContent = '0'));
+
+                // Update IDs and names for new floor
+                const roomTypes = ['bedroom', 'living', 'kitchen', 'bathroom', 'parking', 'puja', 'laundry', 'store'];
+
+                roomTypes.forEach(roomType => {
+                    // Select quantity input fields
+                    let quantityInput = newTable.querySelector(`#${roomType}_quantity-hidden_floor1`);
+                    quantityInput.id = `${roomType}_quantity-hidden_floor${floorCount}`;
+                    quantityInput.name = `${roomType}_quantity_floor${floorCount}`;
+                    quantityInput.value = 0;
+
+                    // Select flooring select fields
+                    let flooringSelect = newTable.querySelector(`#${roomType}_flooring_floor1`);
+                    flooringSelect.id = `${roomType}_flooring_floor${floorCount}`;
+                    flooringSelect.name = `${roomType}_flooring_floor${floorCount}`;
+                });
                 floorContainer.appendChild(newTable);
                 addQuantityListeners(newTable);
             }
-    
+
             const staircaseContainer = document.createElement('div');
             staircaseContainer.classList.add('staircase-container');
             staircaseContainer.style.display = 'none';
@@ -335,19 +356,19 @@
                 <label for="staircase-${floorCount}" class="staircase-label">Staircase Cover Only</label>
             `;
             floorContainer.appendChild(staircaseContainer);
-    
+
             const staircaseCheckbox = staircaseContainer.querySelector('.staircase-checkbox');
-            staircaseCheckbox.addEventListener('change', function () {
+            staircaseCheckbox.addEventListener('change', function() {
                 handleStaircaseToggle(this);
             });
-    
+
             roomList.appendChild(floorContainer);
-    
+
             updateStaircaseVisibility();
             document.getElementById('floor_quantity').value = floorCount;
 
         }
-    
+
         function removeLastFloor() {
             const floors = document.querySelectorAll('.floor-container');
             if (floors.length > 0) {
@@ -355,13 +376,16 @@
                 floorCount--;
                 updateStaircaseVisibility();
                 document.getElementById('floor_quantity').value = floorCount;
+                if (document.getElementById('floor_quantity').value <= 0) {
+                    document.getElementById('floor_quantity').value = 1;
+                }
 
             }
         }
-    
+
         document.getElementById('add-floor-button').addEventListener('click', addNewFloor);
         document.getElementById('remove-floor-button').addEventListener('click', removeLastFloor);
-    
+
         addQuantityListeners(document);
         updateStaircaseVisibility();
     });
