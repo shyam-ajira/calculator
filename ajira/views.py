@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse
 from django.contrib import messages
 from .models import *
@@ -72,40 +72,25 @@ def LocationView(request):
 
 def FlooringView(request):
     if request.method == 'POST':
-        # Get the latest Home instance (ensure this is correct for your use case)
         user = Home.objects.latest('submitted_at')
-
-        # Retrieve the number of floors and staircase information from the form
         floor_quantity = int(request.POST.get('floor_quantity', 0))
         staircase_quantity = int(request.POST.get('staircase_quantity', 0))
-
-        # Determine if a staircase exists based on user input
         staircase_exists = bool(staircase_quantity)
 
-        # Loop through each floor number
         for floor_num in range(1, floor_quantity + 1):
-            # Create or update the Floor instance
             floor, created = Floor.objects.get_or_create(
                 user_name=user,
                 floor_number=floor_num,
                 defaults={'staircase': staircase_exists}
             )
-
-            # If the floor already exists, update its staircase status
             if not created:
                 floor.staircase = staircase_exists
                 floor.save()
 
-            # Define room types to iterate over
             room_types = ['bedroom', 'living', 'kitchen', 'bathroom', 'parking', 'puja', 'laundry', 'store']
-
-            # Loop through each room type to get quantities and flooring types
             for room in room_types:
-                # Retrieve quantity and flooring type for this specific floor
-                quantity = int(request.POST.get(f'{room}_quantity_floor{floor_num}', 0))  # Ensure to use the correct key
-                flooring = request.POST.get(f'{room}_flooring_floor{floor_num}', 'none')  # Ensure to use the correct key
-
-                # Only create or update Room instances if quantity is greater than zero
+                quantity = int(request.POST.get(f'{room}_quantity_floor{floor_num}', 0))  
+                flooring = request.POST.get(f'{room}_flooring_floor{floor_num}', 'none') 
                 if quantity > 0:
                     Room.objects.update_or_create(
                         user_name=user,
@@ -113,69 +98,8 @@ def FlooringView(request):
                         room_type=room,
                         defaults={'quantity': quantity, 'flooring_type': flooring}
                     )
-
-        return redirect('other')  # Redirect after processing
-
+        return redirect('other') 
     return render(request, 'flooring.html')
-
-
-# def FlooringView(request):
-#     if request.method == 'POST':
-#         floor_quantity = int(request.POST.get('floor_quantity', 1))
-#         staircase_quantity = int(request.POST.get('staircase_quantity', 0))
-
-#         # Initialize a list to hold the data for each floor
-#         floors_data = []
-
-#         for floor in range(1, floor_quantity + 1):
-#             # Retrieve quantities and flooring types for each room type per floor
-#             # bedrooms_quantity = int(request.POST.get(f'bedroom_quantity', 0))
-#             bedrooms_quantity = int(request.POST.get(f'bedroom_quantity_floor{floor}', 0))
-#             bedrooms_flooring = request.POST.get(f'bedroom_flooring_floor{floor}', 'none')
-
-#             living_quantity = int(request.POST.get(f'living_quantity_floor{floor}', 0))
-#             living_flooring = request.POST.get(f'living_flooring_floor{floor}', 'none')
-
-#             kitchen_quantity = int(request.POST.get(f'kitchen_quantity_floor{floor}', 0))
-#             kitchen_flooring = request.POST.get(f'kitchen_flooring_floor{floor}', 'none')
-
-#             bathroom_quantity = int(request.POST.get(f'bathroom_quantity_floor{floor}', 0))
-#             bathroom_flooring = request.POST.get(f'bathroom_flooring_floor{floor}', 'none')
-
-#             parking_quantity = int(request.POST.get(f'parking_quantity_floor{floor}', 0))
-#             parking_flooring = request.POST.get(f'parking_flooring_floor{floor}', 'none')
-
-#             puja_quantity = int(request.POST.get(f'puja_quantity_floor{floor}', 0))
-#             puja_flooring = request.POST.get(f'puja_flooring_floor{floor}', 'none')
-
-#             laundry_quantity = int(request.POST.get(f'laundry_quantity_floor{floor}', 0))
-#             laundry_flooring = request.POST.get(f'laundry_flooring_floor{floor}', 'none')
-
-#             store_quantity = int(request.POST.get(f'store_quantity_floor{floor}', 0))
-#             store_flooring = request.POST.get(f'store_flooring_floor{floor}', 'none')
-
-#             # Collect data for this floor
-#             floor_data = {
-#                 "floor": floor,
-#                 "bedrooms": {"quantity": bedrooms_quantity, "flooring": bedrooms_flooring},
-#                 "living": {"quantity": living_quantity, "flooring": living_flooring},
-#                 "kitchen": {"quantity": kitchen_quantity, "flooring": kitchen_flooring},
-#                 "bathroom": {"quantity": bathroom_quantity, "flooring": bathroom_flooring},
-#                 "parking": {"quantity": parking_quantity, "flooring": parking_flooring},
-#                 "puja": {"quantity": puja_quantity, "flooring": puja_flooring},
-#                 "laundry": {"quantity": laundry_quantity, "flooring": laundry_flooring},
-#                 "store": {"quantity": store_quantity, "flooring": store_flooring},
-#             }
-
-#             floors_data.append(floor_data)
-
-#         print("Floor Data:", floors_data)  # Debugging output
-
-#         return redirect('flooring')  # Redirect after processing
-
-#     return render(request, 'flooring.html')
-
-
 
 
 def OtherView(request):
@@ -194,8 +118,10 @@ def OtherView(request):
         return redirect('summary')  
     return render(request, 'other.html')
 
-def Summary(request):
-    return render(request, 'summary.html')
+def SummaryView(request):
+    user = Home.objects.latest('submitted_at')
+    summary = user.summary 
+    return render(request, 'summary.html', {'summary': summary}) 
 
 def CostCalculation(request):
     return render(request, 'cost_cal.html')

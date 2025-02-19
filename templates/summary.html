@@ -1,32 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <div class="content">
-            <div class="image-area">
-                <div class="house-image">
-                    <img src="{% static 'house_placeholder.png' %}" alt="House Image">
-                </div>
-            </div>
-
-            <div class="text-area">
-                <p>तपाईंको घरको कुल उत्कृष्ट क्षेत्रः</p>
-                <p class="area-value">155 S.F.</p>
-            </div>
-
-            <div class="text-area">
-                <p>तपाईंलाई चाहिने कुल जमीन</p>
-                <p class="area-value">205 S.F. (2 पैसा, 2 दाम)</p>
-            </div>
-
-            <div class="unit-toggle">
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-                <span class="unit-label">Aana</span>
+    <div class="content">
+        <div class="image-area">
+            <div class="house-image">
+                <img src="{% static 'house_placeholder.png' %}" alt="House Image">
             </div>
         </div>
+        <div class="text-area">
+            <p>तपाईंको घरको कुल उत्कृष्ट क्षेत्रः</p>
+            <p class="area-value">{{ summary.total_house_area }} S.F.</p>
+        </div>
+    </div>
 
-        <button class="cost-info-button">Cost Information</button>
-
+    <a href="{% url 'cost_calculation' %}" class="cost-info-button">Cost Information</a>
 {% endblock content %}

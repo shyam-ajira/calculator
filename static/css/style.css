@@ -521,5 +521,7 @@ input:checked + .slider:before {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    min-width: 200px; /* Set a minimum width */
+    min-height: 40px; /* Add a minimum height */
+    font-size: 16px; /* Increase font size for better readability */
 }

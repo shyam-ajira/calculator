@@ -389,3 +389,11 @@ def FlooringView(request):
         return redirect('flooring')
     
     return render(request, 'flooring.html')
+
+
+
+        # def save(self, *args, **kwargs):
+    #     location = Location.objects.filter(user_name=self.user_name).first()
+    #     if location:
+    #         self.phone_number = location.contact_number  
+    #     super().save(*args, **kwargs)
