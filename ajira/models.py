@@ -87,17 +87,26 @@ class Room(models.Model):
         'store': 25
     }
     
+    TOTAL_COST_DEFAULTS = {
+        'affordable': {'tile': 280, 'granite': 550, 'parquet': 120, 'sisou': 350, 'none': 50},
+        'premium': {'tile': 500, 'granite': 800, 'parquet': 300, 'sisou': 450, 'none': 100}
+    }
+    
     user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='room')
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES)
     quantity = models.PositiveIntegerField(default=0)
     flooring_type = models.CharField(max_length=50, choices=FLOORING_CHOICES, default='none')
     room_area = models.PositiveIntegerField(default=0)
-
+    rate = models.PositiveIntegerField(default=0)
+    cost = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.room_area = self.ROOM_AREAS.get(self.room_type, 0) * self.quantity
+        self.rate = self.TOTAL_COST_DEFAULTS.get(self.user_name.construction_standard, {}).get(self.flooring_type, 0)
+        self.cost = self.rate * self.room_area
         super().save(*args, **kwargs)
+        
                
     def __str__(self):
         return f"{self.room_type} - {self.floor} ({self.quantity})"
@@ -168,8 +177,8 @@ class Summary(models.Model):
 
 class Cost(models.Model):
     TOTAL_COST_DEFAULTS = {
-        'affordable': {'tile': 280, 'granite': 550, 'parquet': 120},
-        'premium': {'tile': 500, 'granite': 800, 'parquet': 300, 'sisou': 400}
+        'affordable': {'tile': 280, 'granite': 550, 'parquet': 120, 'sisou': 350},
+        'premium': {'tile': 500, 'granite': 800, 'parquet': 300, 'sisou': 450}
     }
     
     user_name = models.OneToOneField(Home, on_delete=models.CASCADE, related_name='cost')

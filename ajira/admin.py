@@ -22,7 +22,7 @@ class FloorAdmin(admin.ModelAdmin):
     
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type','room_area',)
+    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type','room_area','rate','cost')
     list_filter = ('room_type', 'flooring_type')
     search_fields = ('room_type',)
 
