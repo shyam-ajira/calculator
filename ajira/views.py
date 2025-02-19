@@ -73,7 +73,7 @@ def LocationView(request):
 
 def FlooringView(request):
     if request.method == 'POST':
-        user = Home.objects.first() 
+        user = Home.objects.latest('submitted_at') 
 
         floor_quantity = int(request.POST.get('floor_quantity', 0))
         staircase_quantity = request.POST.get('staircase_quantity', 0)

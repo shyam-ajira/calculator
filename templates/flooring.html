@@ -152,7 +152,7 @@
                             <button  type = "button" class="minus">-</button>
                             <span class="quantity" id="puja-quantity" name = "puja_quantity">0</span>
                             <input type="hidden" name="puja_quantity" id="puja_quantity-hidden" class = "hiddenvalueforjs" value="0">
-                            <button type = "button" class="plus">+</button>
+                            <button type = "button"  class="plus">+</button>
                         </div>
                     </td>
                     <td>
@@ -267,6 +267,7 @@
     
         function addQuantityListeners(container) {
             const quantityButtons = container.querySelectorAll('.quantity-control button');
+            console.log(quantityButtons);
             quantityButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     updateQuantity(button);
