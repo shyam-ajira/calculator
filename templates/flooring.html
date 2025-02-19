@@ -225,7 +225,7 @@
         <button type="button" class="floor-button" id="remove-floor-button">Remove Floor</button>
     </div>
     <input type="hidden" name="floor_quantity" id="floor_quantity" value="1">
-    <input type="hidden" name="staircase_quantity" id="staircase_quantity" value="0">
+    <!-- <input type="hidden" class="strcase_cover" name="staircase_quantity_floor1" id="staircase_quantity_floor1" value="0"> -->
     <button type="submit" class="submit-button">Submit</button>
 </form>
 
@@ -298,16 +298,19 @@
             }
         }
 
-        function handleStaircaseToggle(checkbox) {
-            const floorContainer = checkbox.closest('.floor-container');
+        function handleStaircaseToggle(thisbox, floorNo) {
+            const floorContainer = thisbox.closest('.floor-container');
             const roomTable = floorContainer.querySelector('.room-table');
+            
 
-            if (checkbox.checked) {
+            if (thisbox.checked) {
                 roomTable.style.display = 'none';
-                document.getElementById('staircase_quantity').value = 1;
+                tempclassname = "staircase-".concat(floorNo);
+                document.getElementById(tempclassname).value = 1;
             } else {
                 roomTable.style.display = 'table';
-                document.getElementById('staircase_quantity').value = 0;
+                tempclassname = "staircase-".concat(floorNo);
+                document.getElementById(tempclassname).value = 0;
 
             }
         }
@@ -344,6 +347,7 @@
                     flooringSelect.id = `${roomType}_flooring_floor${floorCount}`;
                     flooringSelect.name = `${roomType}_flooring_floor${floorCount}`;
                 });
+                
                 floorContainer.appendChild(newTable);
                 addQuantityListeners(newTable);
             }
@@ -352,14 +356,14 @@
             staircaseContainer.classList.add('staircase-container');
             staircaseContainer.style.display = 'none';
             staircaseContainer.innerHTML = `
-                <input type="checkbox" id="staircase-${floorCount}" class="staircase-checkbox">
+                <input type="checkbox" id="staircase-${floorCount}" class="staircase-checkbox" name="staircase-${floorCount}">
                 <label for="staircase-${floorCount}" class="staircase-label">Staircase Cover Only</label>
             `;
             floorContainer.appendChild(staircaseContainer);
 
             const staircaseCheckbox = staircaseContainer.querySelector('.staircase-checkbox');
             staircaseCheckbox.addEventListener('change', function() {
-                handleStaircaseToggle(this);
+                handleStaircaseToggle(this, floorCount);
             });
 
             roomList.appendChild(floorContainer);

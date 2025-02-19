@@ -77,9 +77,9 @@ class Room(models.Model):
     ]
     
     ROOM_AREAS = {
-        'bedroom': 140,
-        'living': 150,
-        'kitchen': 120,
+        'bedroom': 100,
+        'living': 100,
+        'kitchen': 100,
         'bathroom': 30,
         'parking': 120,
         'puja': 50,
@@ -138,15 +138,16 @@ class Summary(models.Model):
     WALLS_AREA_SC_only = 50
     
     user_name = models.OneToOneField(Home, on_delete=models.CASCADE, related_name='summary')
-    phone_number= models.CharField(max_length=13)
+    phone_number = models.CharField(max_length=13)
     total_house_area = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return f"Summary for {self.user_name.name}"
     
     def save(self, *args, **kwargs):
+        # Calculate total room area using the area field
         total_room_area = sum(room.room_area for room in self.user_name.room.all())
-
+        
         floors = self.user_name.floor.all()
         num_floors = floors.count()
         
@@ -154,15 +155,16 @@ class Summary(models.Model):
 
         if has_staircase:
             self.total_house_area = (total_room_area + self.STAIRS_AREA * num_floors +
-                                     self.WALLS_AREA_SC_only + self.WALLS_AREA + (num_floors - 1))
+                                     self.WALLS_AREA_SC_only + self.WALLS_AREA * (num_floors - 1))
         else:
-            self.total_house_area = (total_room_area + self.WALLS_AREA + self.STAIRS_AREA * num_floors)
+            self.total_house_area = (total_room_area + (self.WALLS_AREA + self.STAIRS_AREA) * num_floors)
         
         location = Location.objects.filter(user_name=self.user_name).first()
         if location:
             self.phone_number = location.contact_number 
         
         super().save(*args, **kwargs)
+
 
 class Cost(models.Model):
     TOTAL_COST_DEFAULTS = {
@@ -171,7 +173,7 @@ class Cost(models.Model):
     }
     
     user_name = models.OneToOneField(Home, on_delete=models.CASCADE, related_name='cost')
-    phone_number= models.CharField(max_length=13)
+    phone_number = models.CharField(max_length=13)
     total_cost = models.PositiveIntegerField(default=0)
     
     def __str__(self):
@@ -181,13 +183,19 @@ class Cost(models.Model):
         construction_standard = self.user_name.construction_standard
         cost_rates = self.TOTAL_COST_DEFAULTS.get(construction_standard, {})
         total_cost = 0
+        
         for room in self.user_name.room.all():
             rate = cost_rates.get(room.flooring_type, 0)
-            total_cost += rate * room.room_area
+            total_cost += rate * room.room_area  # Use room.area instead of room.room_area
+            
         self.total_cost = total_cost
         
         location = Location.objects.filter(user_name=self.user_name).first()
         if location:
             self.phone_number = location.contact_number
+            
         super().save(*args, **kwargs)
+        
+        
+
 

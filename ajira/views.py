@@ -74,10 +74,12 @@ def FlooringView(request):
     if request.method == 'POST':
         user = Home.objects.latest('submitted_at')
         floor_quantity = int(request.POST.get('floor_quantity', 0))
-        staircase_quantity = int(request.POST.get('staircase_quantity', 0))
-        staircase_exists = bool(staircase_quantity)
+        
 
         for floor_num in range(1, floor_quantity + 1):
+            staircase_quantity = int(request.POST.get(f'staircase-{floor_num}',0))
+            # staircase_quantity = int(request.POST.get('staircase_quantity', 0))
+            staircase_exists = bool(staircase_quantity)     
             floor, created = Floor.objects.get_or_create(
                 user_name=user,
                 floor_number=floor_num,
@@ -98,6 +100,7 @@ def FlooringView(request):
                         room_type=room,
                         defaults={'quantity': quantity, 'flooring_type': flooring}
                     )
+               
         return redirect('other') 
     return render(request, 'flooring.html')
 
@@ -123,7 +126,12 @@ def SummaryView(request):
     summary = user.summary 
     return render(request, 'summary.html', {'summary': summary}) 
 
-def CostCalculation(request):
-    return render(request, 'cost_cal.html')
+# def CostCalculation(request):
+#     user = Home.objects.latest('submitted_at')
+#     cost = user.cost  # Get the Cost object for the latest user
+#     cost.save()  # Save the Cost object to update the total_cost attribute
+#     total_cost = cost.total_cost  # Get the total cost
+#     print(total_cost)
+#     return render(request, 'cost_cal.html', {'cost': cost})
 
 
