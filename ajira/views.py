@@ -107,31 +107,30 @@ def FlooringView(request):
 
 def OtherView(request):
     if request.method == "POST":
-        compound_flooring = request.POST.get('compound_flooring')
-        staircase_flooring = request.POST.get('staircase_flooring')
-        window_type = request.POST.get('window_type')
         user_name = Home.objects.latest('submitted_at')  
-        
-        Other.objects.create(
-            user_name=user_name,
-            compound_flooring=compound_flooring,
-            staircase_flooring=staircase_flooring,
-            window_type=window_type
-        )
+        finish_types = ['compound_flooring', 'staircase_flooring', 'window_type','door','paint','main_door','electrical','plumbing','kitchen','bathroom','sani_other','mod_kitchen','landscape','other_metal_works','railing','misc']
+        for finish_place in finish_types:
+            post_data = request.POST.get(finish_place) 
+            if post_data:
+                Other.objects.create(
+                    user_name=user_name,
+                    finish_type=finish_place,
+                    finish=post_data   
+                )
+            else:
+                Other.objects.create(
+                    user_name=user_name,
+                    finish_type=finish_place,
+                    finish=finish_place
+                )
         return redirect('summary')  
     return render(request, 'other.html')
 
 def SummaryView(request):
     user = Home.objects.latest('submitted_at')
-    summary = user.summary 
-    return render(request, 'summary.html', {'summary': summary}) 
 
-# def CostCalculation(request):
-#     user = Home.objects.latest('submitted_at')
-#     cost = user.cost  # Get the Cost object for the latest user
-#     cost.save()  # Save the Cost object to update the total_cost attribute
-#     total_cost = cost.total_cost  # Get the total cost
-#     print(total_cost)
-#     return render(request, 'cost_cal.html', {'cost': cost})
+    return render(request, 'summary.html') 
+
+
 
 

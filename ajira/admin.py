@@ -22,20 +22,17 @@ class FloorAdmin(admin.ModelAdmin):
     
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type','room_area','rate','cost')
-    list_filter = ('room_type', 'flooring_type')
-    search_fields = ('room_type',)
+    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type','room_area','rate','cost', 'window_area')
+    
 
 @admin.register(Other)
 class OtherAdmin(admin.ModelAdmin):
-    list_display = ('user_name', 'compound_flooring', 'staircase_flooring', 'window_type')
-    list_filter = ('compound_flooring', 'staircase_flooring', 'window_type')
+    list_display = ('user_name','phone_number','finish_type','finish','qty','rate','cost')
+
     
 @admin.register(Summary)
 class SummaryAdmin(admin.ModelAdmin):
-    list_display = ('user_name','phone_number','total_house_area')
+    list_display = ('user_name','phone_number','no_of_floors','total_house_area')
     
-@admin.register(Cost)
-class CostAdmin(admin.ModelAdmin):
-    list_display = ('user_name','total_cost',)
+
     

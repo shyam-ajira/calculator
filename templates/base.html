@@ -10,9 +10,10 @@
 <body class="{% block body_class %} {% endblock %}">
     <div class="container">
         <div class="logo">
-            <img src="/static/img/logo.jpeg" alt="Logo" class="logo-image">
+            <a herf="/" ><img src="/static/img/logo.jpeg" alt="Logo" class="logo-image"></a>
         </div>
-        <p>Home Cost Calculator</p>
+        <h2>Home Cost Calculator</h2>
+        <p>
         {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -20,6 +21,7 @@
         {% endfor %}
     </ul>
         {% endif %}
+    </p>
         {% block content %}
         
         {% endblock %}

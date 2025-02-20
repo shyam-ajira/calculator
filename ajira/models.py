@@ -13,7 +13,7 @@ class Home(models.Model):
         ('4.5-5.0', '4.5 to 5.0 aana'),
         ('> 5.0', 'Greater than 5 aana'),
     ]
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     land_area = models.CharField(max_length=20, choices=LAND_AREA_CHOICES)
     ground_coverage = models.FloatField(max_length=50)
     construction_standard = models.CharField(max_length=20, choices=STATUS_CHOICES)
@@ -86,6 +86,16 @@ class Room(models.Model):
         'laundry': 25,
         'store': 25
     }
+    WINDOW_AREAS_DEFAULT = {
+        'bedroom': 30,
+        'living': 30,
+        'kitchen': 30,
+        'bathroom': 6,
+        'parking': 0,
+        'puja': 6,
+        'laundry': 6,
+        'store': 6
+    }
     
     TOTAL_COST_DEFAULTS = {
         'affordable': {'tile': 280, 'granite': 550, 'parquet': 120, 'sisou': 350, 'none': 50},
@@ -100,11 +110,13 @@ class Room(models.Model):
     room_area = models.PositiveIntegerField(default=0)
     rate = models.PositiveIntegerField(default=0)
     cost = models.PositiveIntegerField(default=0)
+    window_area =   models.PositiveIntegerField(default=0) 
 
     def save(self, *args, **kwargs):
         self.room_area = self.ROOM_AREAS.get(self.room_type, 0) * self.quantity
         self.rate = self.TOTAL_COST_DEFAULTS.get(self.user_name.construction_standard, {}).get(self.flooring_type, 0)
         self.cost = self.rate * self.room_area
+        self.window_area = self.WINDOW_AREAS_DEFAULT.get(self.room_type, 0) * self.quantity
         super().save(*args, **kwargs)
         
                
@@ -130,15 +142,212 @@ class Other(models.Model):
         ('aluminum', 'Aluminum'),
         ('wood', 'Wood'),
     ]
+    land_area_map = {
+            '2.5-3.0': 3.0,
+            '3.0-3.5': 3.5,
+            '3.5-4.0': 4.0,
+            '4.0-4.5': 4.5,
+            '4.5-5.0': 5.0,
+            '> 5.0': 20 
+        }
+
+    COSTS_DEFAULTS = {
+        'staircase_flooring':{
+            'affordable': {
+                'tile': 350,
+                'granite': 650,
+                'parquet': 400,
+                'sisou': 700
+            },
+            'premium': {
+                'tile': 500,
+                'granite': 800,
+                'parquet': 600,
+                'sisou': 1400
+            }
+        },
+        'compound_flooring': {
+            'affordable': {
+                'tile': 580, # INCUDING PCC
+                'block': 350,
+                'stone': 450
+            },
+            'premium': {
+                'tile': 800,
+                'block': 500,
+                'stone': 600
+            }
+        },
+        'window_type': {
+            'affordable': {
+                'upvc': 650,
+                'aluminum': 600,
+                'wood': 1500
+            },
+            'premium': {
+                'upvc': 1200,
+                'aluminum': 900,
+                'wood': 2200
+            
+            } 
+        },
+        'main_door': {
+            'affordable': {
+                'main_door': 50000
+            },
+            'premium': {
+                'main_door': 200000,
+            } 
+        },
+        'door': {
+            'affordable': {
+                'door': 18000
+            },
+            'premium': {
+                'door': 25000,
+            } 
+        },
+        'mod_kitchen': {
+            'affordable': {
+                'mod_kitchen': 250000
+            },
+            'premium': {
+                'mod_kitchen': 600000,
+            } 
+        },
+        'landscape': {
+            'affordable': {
+                'landscape': 150000
+            },
+            'premium': {
+                'landscape': 500000,
+            } 
+        },
+        'paint':{
+            'affordable': {
+                'paint': 100000,
+            },
+            'premium': {
+                'paint': 250000,
+            }
+        },
+        'electrical':{
+            'affordable': {
+                'electrical': 100000,
+            },
+            'premium': {
+                'electrical': 250000,
+            }
+        },
+        'plumbing':{
+            'affordable': {
+                'plumbing': 100000,
+            },
+            'premium': {
+                'plumbing': 150000,
+            }
+        },
+        'bathroom':{
+            'affordable': {
+                'bathroom': 40000,
+            },
+            'premium': {
+                'bathroom': 120000,
+            }
+        },
+        'kitchen':{
+            'affordable': {
+                'kitchen': 20000,
+            },
+            'premium': {
+                'kitchen': 40000,
+            }
+        },
+        'sani_other':{
+            'affordable': {
+                'sani_other': 50000,
+            },
+            'premium': {
+                'sani_other': 200000,
+            }
+        },
+        'railing':{
+            'affordable': {
+                'raling': 40000,
+            },
+            'premium': {
+                'railing': 100000,
+            }
+        },
+        'other_metal_works':{
+            'affordable': {
+                'other_metal_works': 100000,
+            },
+            'premium': {
+                'other_metal_works': 200000,
+            }
+        },
+        'misc':{
+            'affordable': {
+                'misc': 100000,
+            },
+            'premium': {
+                'misc': 200000,
+            }
+        }
+    }
     
+ 
+
     user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='other')
-    compound_flooring = models.CharField(max_length=50, choices=MATERIAL_CHOICES, default='stone')
-    staircase_flooring = models.CharField(max_length=50, choices=STAIRCASE_FLOORING_CHOICES, default='tile')
-    window_type = models.CharField(max_length=50, choices=WINDOW_TYPES, default='upvc')
+    phone_number= models.CharField(max_length=13)
+    finish_type= models.CharField(max_length=50) # window_type, compound_flooring, staircase_flooring
+    finish= models.CharField(max_length=50)  # alumium, upvc, etc.. tile stone etc 
+    qty= models.CharField(max_length=100)
+    rate=models.PositiveIntegerField(default=0)
+    cost=models.PositiveIntegerField(default=0)   
+    
+    
     
     def __str__(self):
         return f"Features for {self.user_name.name}"
-
+    
+    def save(self, *args, **kwargs):
+        noofffloors = self.user_name.floor.all().count()
+        user_gc = Home.objects.latest('submitted_at').ground_coverage
+        COMPOUND_AREA = self.land_area_map[Home.objects.latest('submitted_at').land_area]*342.25-Home.objects.latest('submitted_at').ground_coverage
+        STAIRS_AREA = (noofffloors - 1)* 80 + 25 * (2* (noofffloors - 1) + 1 )
+        WINDOW_AREA = Room.objects.filter(user_name=self.user_name).aggregate(models.Sum('window_area'))['window_area__sum'] + (noofffloors * 9.5 * 4 ) -4 # 9.5 ft floor height / 4 ft width of window -4 ft for under staircase deduction
+        numofroom=self.user_name.room.all().count()
+        NUMBER_OF_DOORS = numofroom + 3
+        numberofbathrooms = self.user_name.room.filter(room_type='bathroom').count()
+        numberofkitchen = self.user_name.room.filter(room_type='kitchen').count()
+        multiplier =  (user_gc + abs(1000 - user_gc) * user_gc/1000)/1000
+        
+        
+        QTTY = {
+            'compound_flooring':COMPOUND_AREA,
+            'staircase_flooring':STAIRS_AREA,
+            'window_type':WINDOW_AREA,
+            'main_door':1,
+            'door':NUMBER_OF_DOORS,
+            'mod_kitchen':1,
+            'sani_other':1,
+            'landscape':1,
+            'paint':noofffloors*multiplier,
+            'electrical':noofffloors*multiplier,
+            'plumbing':noofffloors*multiplier,
+            'bathroom':numberofbathrooms,
+            'kitchen':numberofkitchen,
+            'railing':noofffloors*multiplier,
+            'other_metal_works':1,
+            'misc':1
+            
+        }
+        self.qty = QTTY.get(self.finish_type, 0)
+        self.rate = Other.COSTS_DEFAULTS.get(self.finish_type, 0).get(self.user_name.construction_standard, {}).get(self.finish, 0)
+        self.cost = self.rate * self.qty
+        super().save(*args, **kwargs)
 
 class Summary(models.Model):
     
@@ -149,6 +358,7 @@ class Summary(models.Model):
     user_name = models.OneToOneField(Home, on_delete=models.CASCADE, related_name='summary')
     phone_number = models.CharField(max_length=13)
     total_house_area = models.PositiveIntegerField(default=0)
+    no_of_floors = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return f"Summary for {self.user_name.name}"
@@ -159,6 +369,8 @@ class Summary(models.Model):
         
         floors = self.user_name.floor.all()
         num_floors = floors.count()
+        
+        self.no_of_floors = num_floors
         
         has_staircase = floors.filter(staircase=True).exists()
 
@@ -175,36 +387,8 @@ class Summary(models.Model):
         super().save(*args, **kwargs)
 
 
-class Cost(models.Model):
-    TOTAL_COST_DEFAULTS = {
-        'affordable': {'tile': 280, 'granite': 550, 'parquet': 120, 'sisou': 350},
-        'premium': {'tile': 500, 'granite': 800, 'parquet': 300, 'sisou': 450}
-    }
-    
-    user_name = models.OneToOneField(Home, on_delete=models.CASCADE, related_name='cost')
-    phone_number = models.CharField(max_length=13)
-    total_cost = models.PositiveIntegerField(default=0)
-    
-    def __str__(self):
-        return f"Cost for {self.user_name.name}"
 
-    def save(self, *args, **kwargs):
-        construction_standard = self.user_name.construction_standard
-        cost_rates = self.TOTAL_COST_DEFAULTS.get(construction_standard, {})
-        total_cost = 0
-        
-        for room in self.user_name.room.all():
-            rate = cost_rates.get(room.flooring_type, 0)
-            total_cost += rate * room.room_area  # Use room.area instead of room.room_area
-            
-        self.total_cost = total_cost
-        
-        location = Location.objects.filter(user_name=self.user_name).first()
-        if location:
-            self.phone_number = location.contact_number
-            
-        super().save(*args, **kwargs)
-        
+    
         
 
 
