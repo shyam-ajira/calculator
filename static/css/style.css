@@ -10,7 +10,7 @@ html, body {
 
 body {
     font-family: 'Poppins', sans-serif; 
-    background: url('/static/img/bg.jpg') no-repeat center center fixed;
+    background: url('/static/img/bg.png') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -524,4 +524,5 @@ input:checked + .slider:before {
     min-width: 200px; /* Set a minimum width */
     min-height: 40px; /* Add a minimum height */
     font-size: 16px; /* Increase font size for better readability */
+    text-decoration: none;
 }

@@ -13,7 +13,7 @@ class Home(models.Model):
         ('4.5-5.0', '4.5 to 5.0 aana'),
         ('> 5.0', 'Greater than 5 aana'),
     ]
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, null=True, blank=True)
     land_area = models.CharField(max_length=20, choices=LAND_AREA_CHOICES)
     ground_coverage = models.FloatField(max_length=50)
     construction_standard = models.CharField(max_length=20, choices=STATUS_CHOICES)
@@ -38,7 +38,7 @@ class Municipality(models.Model):
         
 class Location(models.Model):
     user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='locations')
-    contact_number = models.CharField(max_length=13)
+    contact_number = models.CharField(max_length=13,unique=True, null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     municipality = models.ForeignKey(Municipality, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)
@@ -68,7 +68,6 @@ class Room(models.Model):
         ('bedroom', 'Bedroom'),
         ('living', 'Living'),
         ('kitchen', 'Kitchen'),
-        ('dining', 'Dining'),
         ('bathroom', 'Bathroom'),
         ('parking', 'Parking'),
         ('puja', 'Puja Room'),
@@ -104,6 +103,7 @@ class Room(models.Model):
     
     user_name = models.ForeignKey(Home, on_delete=models.CASCADE, related_name='room')
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE, related_name='rooms')
+    floor_numm = models.PositiveIntegerField(default=0)
     room_type = models.CharField(max_length=50, choices=ROOM_TYPES)
     quantity = models.PositiveIntegerField(default=0)
     flooring_type = models.CharField(max_length=50, choices=FLOORING_CHOICES, default='none')
@@ -359,6 +359,7 @@ class Summary(models.Model):
     phone_number = models.CharField(max_length=13)
     total_house_area = models.PositiveIntegerField(default=0)
     no_of_floors = models.PositiveIntegerField(default=0)
+    total_carpet_area = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return f"Summary for {self.user_name.name}"
@@ -366,6 +367,13 @@ class Summary(models.Model):
     def save(self, *args, **kwargs):
         # Calculate total room area using the area field
         total_room_area = sum(room.room_area for room in self.user_name.room.all())
+        
+        # Calculate total carpet area (sum of living room, bedroom, kitchen)
+        carpet_room_types = ['bedroom', 'living', 'kitchen']
+        self.total_carpet_area = sum(
+            room.room_area for room in self.user_name.room.filter(room_type__in=carpet_room_types)
+        )
+        
         
         floors = self.user_name.floor.all()
         num_floors = floors.count()

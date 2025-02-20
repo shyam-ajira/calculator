@@ -70,8 +70,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="your_logo.png" alt="Company Logo" class="logo">  <h1>Approximate Cost for </h1>
-        </div>
+            <img src="/static/img/logo.jpeg" alt="Company Logo" class="logo">  <h1>Approximate Cost for {{ summary.user_name.name }}'s House</h1> </div>
 
         <div class="info">
             <p><strong>Name:</strong> {{ summary.user_name.name }}</p>
@@ -101,18 +100,43 @@
                     <td>{{ room.room_area }} sq. ft.</td>
                     <td>Rs. {{ room.cost }}</td>
                 </tr>
+                {% empty %}  <tr><td colspan="5">No room details found.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
+        <h2>Cost Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Details</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>Structure Cost</td>
+                    <td>Rs. {{ total_str_cost }}</td>
+                </tr>
+                <tr>
+                    <td>Finishing Cost</td>
+                    <td>Rs. {{ total_cost }}</td>
+                </tr>
+                <tr>
+                    <td>Total Construction Cost</td>
+                    <td>Rs. {{ total_const_cost }} </td>
+                </tr>
+                
+            </tbody>
+        </table>
 
-        <h2>Other Costs</h2>
+        <h2>Finishing Cost Breakdown</h2>
         <table>
             <thead>
                 <tr>
                     <th>Finish Type</th>
                     <th>Finish</th>
                     <th>Quantity</th>
-                    <th>Rate</th>
                     <th>Cost</th>
                 </tr>
             </thead>
@@ -122,19 +146,50 @@
                     <td>{{ other.finish_type }}</td>
                     <td>{{ other.finish }}</td>
                     <td>{{ other.qty }}</td>
-                    <td>Rs. {{ other.rate }}</td>
                     <td>Rs. {{ other.cost }}</td>
                 </tr>
+                {% empty %}  <tr><td colspan="5">No other cost details found.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <h2>Labor Cost Breakdown</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Details</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td>Structure Labor Cost</td>
+                    <td>Rs. {{ total_str_lab_cost }}</td>
+                </tr>
+                <tr>
+                    <td>Paint Labor Cost </td>
+                    <td>Rs. {{ total_paint_labor_cost }}</td>
+                </tr>
+                <tr>
+                    <td>Electrical Labor Cost</td>
+                    <td>Rs. {{ total_elec_labor_cost }} </td>
+                </tr>
+                <tr>
+                    <td>Sanitary Labor Cost</td>
+                    <td>Rs. {{ total_sani_labor_cost }} </td>
+                </tr>
+                
+            </tbody>
+        </table>
+
 
         <div class="total">
             Total Construction Cost: Rs. {{ total_cost }}
         </div>
 
         <div class="footer">
-            <p>The costs shown here are approximate costs only. Acutal cost will vary based on design and material selection. This document shall <strong> NOT BE </strong> legally binding and shall not be considered a quotation. </p>
+            <p>The costs shown here are approximate costs only. Actual cost will vary based on design and material selection. This document shall <strong> NOT BE </strong> legally binding and shall not be considered a quotation. </p>
             <p><strong>Company Name:</strong> Ajira Builders Pvt. Ltd.</p>  <p><strong>Address:</strong> New Baneshwor, Kathmandu</p> <p><strong>Contact:</strong> +977-01-47 97 022 | <strong>Email:</strong> support@ajiragroup.com</p> <p>&copy; {{ current_year }} Ajira Builders. All rights reserved.</p> </div>
 
     </div>

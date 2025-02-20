@@ -3,6 +3,9 @@ from django.http import JsonResponse
 from django.contrib import messages
 from .models import *
 from .forms import *
+import datetime
+from django.db.models import Sum
+
 
 # Create your views here.
 def HomeView(request):
@@ -33,6 +36,11 @@ def HomeView(request):
         if ground_coverage_value > max_perm_ground_coverage:
             messages.error(request, f"Ground coverage must not exceed 70% of the land.")
             return redirect('home')
+        
+        existing_home = Home.objects.filter(name=name).first()
+        if existing_home:
+            messages.error(request, "Name already exists.")
+            return render(request, 'home.html')
 
         new_home = Home(
             name=name,
@@ -97,6 +105,7 @@ def FlooringView(request):
                     Room.objects.update_or_create(
                         user_name=user,
                         floor=floor,
+                        floor_numm = floor_num,
                         room_type=room,
                         defaults={'quantity': quantity, 'flooring_type': flooring}
                     )
@@ -128,9 +137,50 @@ def OtherView(request):
 
 def SummaryView(request):
     user = Home.objects.latest('submitted_at')
+    total_house_area = user.summary.total_house_area
+    carpet_area = user.summary.total_carpet_area
+    context={
+        'total_house_area':total_house_area,
+        'carpet_area':carpet_area
+    }
+    return render(request, 'summary.html',context) 
 
-    return render(request, 'summary.html') 
+def ResultView(request):
+    user = Home.objects.latest('submitted_at') 
+    summary = Summary.objects.get(user_name=user) 
 
+
+    WALLS_AREA = 150
+    STAIRS_AREA = 200
+
+    
+    floor1_area = Room.objects.filter(user_name=user, floor_numm=1).aggregate(Sum('room_area'))['room_area__sum'] +  WALLS_AREA + STAIRS_AREA
+    total_str_cost = (floor1_area + Summary.objects.get(user_name=user).total_house_area) * 1800
+    total_room_cost = sum(room.cost for room in user.room.all()) if user.room.exists() else 0
+    total_other_cost = sum(other.cost for other in user.other.all()) if user.other.exists() else 0
+    total_cost = total_room_cost + total_other_cost
+    noofffloors = Summary.objects.get(user_name=user).no_of_floors
+    
+    total_str_lab_cost = (floor1_area + Summary.objects.get(user_name=user).total_house_area) * 400
+    total_paint_labor_cost =  noofffloors * 40000
+    total_elec_labor_cost = noofffloors * 40000
+    numberofbathrooms = Other.objects.filter(user_name=user, finish_type='bathroom').count()
+    numberofkitchen = Other.objects.filter(user_name=user, finish_type='kitchen').count()
+    total_sani_labor_cost = numberofbathrooms * 14000 + numberofkitchen * 10000
+    print(numberofkitchen  )
+
+    context = {
+        'summary': summary,
+        'total_cost': total_cost,
+        'current_year': datetime.datetime.now().year, 
+        'total_str_cost':total_str_cost,
+        'total_const_cost':total_str_cost + total_cost,
+        'total_str_lab_cost': total_str_lab_cost,
+        'total_paint_labor_cost':total_paint_labor_cost,
+        'total_elec_labor_cost': total_elec_labor_cost,
+        'total_sani_labor_cost':total_sani_labor_cost        
+    }
+    return render(request, 'result.html', context)
 
 
 

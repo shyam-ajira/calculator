@@ -8,6 +8,6 @@ urlpatterns = [
     path('flooring/', FlooringView, name='flooring'),  
     path('other/', OtherView, name='other'),  
     path('summary/', SummaryView, name='summary'),  
-    # path('calculation/cost/', CostCalculation, name='cost_calculation'),  
+    path('result/', ResultView, name='result'),  
 
 ]

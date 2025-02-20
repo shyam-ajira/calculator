@@ -4,14 +4,17 @@
     <div class="content">
         <div class="image-area">
             <div class="house-image">
-                <img src="{% static 'house_placeholder.png' %}" alt="House Image">
+                <img src="{% static 'img/house.png' %}" alt="House Image" width = 50%%>
             </div>
         </div>
         <div class="text-area">
-            <p>तपाईंको घरको कुल उत्कृष्ट क्षेत्रः</p>
-            <p class="area-value">{{ summary.total_house_area }} S.F.</p>
+            <p>तपाईंको घरको कुल क्षेत्रफल:</p>
+            <p class="area-value">{{ total_house_area }} S.F.</p>
+            
+            <p>कुल कार्पेट क्षेत्रफल:</p>
+            <p class="area-value">{{ carpet_area }} S.F.</p>
         </div>
     </div>
 
-    <a href="" class="cost-info-button">Cost Information</a>
+    <a href="{% url "result" %}" class="cost-info-button">View Cost Details</a>
 {% endblock content %}

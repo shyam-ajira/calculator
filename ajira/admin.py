@@ -22,7 +22,7 @@ class FloorAdmin(admin.ModelAdmin):
     
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('user_name','floor', 'room_type', 'quantity', 'flooring_type','room_area','rate','cost', 'window_area')
+    list_display = ('user_name','floor', 'floor_numm', 'room_type', 'quantity', 'flooring_type','room_area','rate','cost', 'window_area')
     
 
 @admin.register(Other)
@@ -32,7 +32,7 @@ class OtherAdmin(admin.ModelAdmin):
     
 @admin.register(Summary)
 class SummaryAdmin(admin.ModelAdmin):
-    list_display = ('user_name','phone_number','no_of_floors','total_house_area')
+    list_display = ('user_name','phone_number','no_of_floors','total_house_area','total_carpet_area')
     
 
     
