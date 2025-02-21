@@ -1,198 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary Report</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Approximate Cost Calculation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added shadow */
-            background-color: #f9f9f9; /* Soft background color */
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo {
-            max-width: 200px; /* Adjust logo size */
-            margin-bottom: 10px;
-        }
-        h1 {
-            color: #333;
-        }
-        .info {
-            margin-bottom: 20px;
-        }
-        .info p {
-            margin: 5px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-            padding: 10px; /* Increased padding */
-            text-align: left;
-        }
-        th {
-            background-color: #e0e0e0; /* Softer header background */
-            font-weight: bold;
-        }
-        .total {
-            font-weight: bold;
-            background-color: #f0f0f0; /* Lighter total background */
-            padding: 10px; /* Added padding to total row */
-            text-align: right; /* Align total value to the right */
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #777;
-            font-size: 0.9em;
-        }
-        .page-break {
-            page-break-before: always; /* For PDF printing */
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow */
+        background-color: #f9f9f9; /* Soft background color */
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        max-width: 307px;
+        margin-bottom: 24px;
+        margin-right: 694px;
+        margin-top: -62px;
+      }
+      .company-info {
+        text-align: right;
+        margin-right: 23px;
+      }
+      .company-info p {
+        margin: 1px 0;
+      }
+      h1 {
+        color: #333;
+      }
+      .info {
+        margin-bottom: 20px;
+      }
+      .info p {
+        margin: 5px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px; /* Increased padding */
+        text-align: left;
+      }
+      th {
+        background-color: #e0e0e0; /* Softer header background */
+        font-weight: bold;
+      }
+      .total {
+        font-weight: bold;
+        background-color: #f0f0f0; /* Lighter total background */
+        padding: 10px; /* Added padding to total row */
+        text-align: right; /* Align total value to the right */
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #777;
+        font-size: 0.9em;
+      }
+      .page-break {
+        page-break-before: always; /* For PDF printing */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <img src="/static/img/logo.jpeg" alt="Company Logo" class="logo">  <h1>Approximate Cost for {{ summary.user_name.name }}'s House</h1> </div>
-
-        <div class="info">
-            <p><strong>Name:</strong> {{ summary.user_name.name }}</p>
-            <p><strong>Phone Number:</strong> {{ summary.phone_number }}</p>
-            <p><strong>Total House Area:</strong> {{ summary.total_house_area }} sq. ft.</p>
-            <p><strong>Number of Floors:</strong> {{ summary.no_of_floors }}</p>
-            <p><strong>Total Carpet Area:</strong> {{ summary.total_carpet_area }} sq. ft.</p>
+      <div class="header">
+        <div class="company-info">
+            <p><strong>Contact:</strong> +977 9802305071 </p>
+          <p><strong>Address:</strong> New Baneshwor, Kathmandu</p>
+          <p><strong>Email:</strong> support@ajiragroup.com</p>
+          <p><strong>Website: </strong><a href="https://ajiragroup.com/">www.ajiragroup.com</a></p>
         </div>
+        <img src="/static/img/logo.jpeg" alt="Company Logo" class="logo" />
+        <h1>Approximate Cost for {{ summary.user_name.name }}'s House</h1>
+      </div>
+      <div class="info">
+        <p><strong>Name:</strong> {{ summary.user_name.name }}</p>
+        <p><strong>Phone Number:</strong> {{ summary.phone_number }}</p>
+        <p>
+          <strong>Total House Area:</strong> {{ summary.total_house_area }} sq.
+          ft.
+        </p>
+        <p><strong>Number of Floors:</strong> {{ summary.no_of_floors }}</p>
+        <p>
+          <strong>Total Carpet Area:</strong> {{ summary.total_carpet_area }}
+          sq. ft.
+        </p>
+      </div>
 
-        <h2>Room Details</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Room Type</th>
-                    <th>Quantity</th>
-                    <th>Flooring Type</th>
-                    <th>Room Area</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for room in summary.user_name.room.all %}
-                <tr>
-                    <td>{{ room.room_type }}</td>
-                    <td>{{ room.quantity }}</td>
-                    <td>{{ room.flooring_type }}</td>
-                    <td>{{ room.room_area }} sq. ft.</td>
-                    <td>Rs. {{ room.cost }}</td>
-                </tr>
-                {% empty %}  <tr><td colspan="5">No room details found.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h2>Cost Summary</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Details</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td>Structure Cost</td>
-                    <td>Rs. {{ total_str_cost }}</td>
-                </tr>
-                <tr>
-                    <td>Finishing Cost</td>
-                    <td>Rs. {{ total_cost }}</td>
-                </tr>
-                <tr>
-                    <td>Total Construction Cost</td>
-                    <td>Rs. {{ total_const_cost }} </td>
-                </tr>
-                
-            </tbody>
-        </table>
+      <h2>Room Details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Room Type</th>
+            <th>Quantity</th>
+            <th>Flooring Type</th>
+            <th>Room Area</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for room in summary.user_name.room.all %}
+          <tr>
+            <td>{{ room.room_type|title }}</td>
+            <td>{{ room.quantity }}</td>
+            <td>{{ room.flooring_type }}</td>
+            <td>{{ room.room_area }} sq. ft.</td>
+            <td>Rs. {{ room.cost }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">No room details found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <h2>Cost Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Details</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Structure Cost</td>
+            <td>Rs. {{ total_str_cost }}</td>
+          </tr>
+          <tr>
+            <td>Finishing Cost</td>
+            <td>Rs. {{ total_cost }}</td>
+          </tr>
+          {% comment %} <tr>
+            <td>Total Construction Cost</td>
+            <td>Rs. {{ total_const_cost }}</td>
+          </tr> {% endcomment %}
+        </tbody>
+      </table>
 
-        <h2>Finishing Cost Breakdown</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Finish Type</th>
-                    <th>Finish</th>
-                    <th>Quantity</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for other in summary.user_name.other.all %}
-                <tr>
-                    <td>{{ other.finish_type }}</td>
-                    <td>{{ other.finish }}</td>
-                    <td>{{ other.qty }}</td>
-                    <td>Rs. {{ other.cost }}</td>
-                </tr>
-                {% empty %}  <tr><td colspan="5">No other cost details found.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <h2>Finishing Cost Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Finish Type</th>
+            <th>Finish</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for other in summary.user_name.other.all %}
+          <tr>
+            <td>{{ other.finish_type|title }}</td>
+            <td>{{ other.finish|title }}</td>
+            <td>{{ other.qty }}</td>
+            <td>Rs. {{ other.cost }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">No other cost details found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-        <h2>Labor Cost Breakdown</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Details</th>
-                    <th>Cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <tr>
-                    <td>Structure Labor Cost</td>
-                    <td>Rs. {{ total_str_lab_cost }}</td>
-                </tr>
-                <tr>
-                    <td>Paint Labor Cost </td>
-                    <td>Rs. {{ total_paint_labor_cost }}</td>
-                </tr>
-                <tr>
-                    <td>Electrical Labor Cost</td>
-                    <td>Rs. {{ total_elec_labor_cost }} </td>
-                </tr>
-                <tr>
-                    <td>Sanitary Labor Cost</td>
-                    <td>Rs. {{ total_sani_labor_cost }} </td>
-                </tr>
-                
-            </tbody>
-        </table>
+      <h2>Labor Cost Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Details</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Structure Labor Cost</td>
+            <td>Rs. {{ total_str_lab_cost }}</td>
+          </tr>
+          <tr>
+            <td>Paint Labor Cost</td>
+            <td>Rs. {{ total_paint_labor_cost }}</td>
+          </tr>
+          <tr>
+            <td>Electrical Labor Cost</td>
+            <td>Rs. {{ total_elec_labor_cost }}</td>
+          </tr>
+          <tr>
+            <td>Sanitary Labor Cost</td>
+            <td>Rs. {{ total_sani_labor_cost }}</td>
+          </tr>
+        </tbody>
+      </table>
 
+      <div class="total">Total Construction Cost: Rs. {{ total_const_cost }}</div>
 
-        <div class="total">
-            Total Construction Cost: Rs. {{ total_cost }}
-        </div>
-
-        <div class="footer">
-            <p>The costs shown here are approximate costs only. Actual cost will vary based on design and material selection. This document shall <strong> NOT BE </strong> legally binding and shall not be considered a quotation. </p>
-            <p><strong>Company Name:</strong> Ajira Builders Pvt. Ltd.</p>  <p><strong>Address:</strong> New Baneshwor, Kathmandu</p> <p><strong>Contact:</strong> +977-01-47 97 022 | <strong>Email:</strong> support@ajiragroup.com</p> <p>&copy; {{ current_year }} Ajira Builders. All rights reserved.</p> </div>
-
+      <div class="footer">
+        <p>
+          The costs shown here are approximate costs only. Actual cost will vary
+          based on design and material selection. This document shall
+          <strong> NOT BE </strong> legally binding and shall not be considered
+          a quotation.
+        </p>
+        <p><strong>Company Name:</strong> Ajira Builders Pvt. Ltd.</p>
+        <p><strong>Address:</strong> New Baneshwor, Kathmandu</p>
+        <p>
+          <strong>Contact:</strong> +977-01-47 97 022 |
+          <strong>Email:</strong> support@ajiragroup.com
+        </p>
+        <p>&copy; {{ current_year }} Ajira Builders. All rights reserved.</p>
+      </div>
     </div>
-
-    <div class="page-break"></div>  </body>
+  </body>
 </html>
