@@ -187,3 +187,59 @@ def ResultView(request):
 
 
 
+def report(request, user_id):
+    user_home = get_object_or_404(Home, id=user_id)
+    location = Location.objects.filter(user_name=user_home).first()
+    floors = Floor.objects.filter(user_name=user_home)
+    rooms = Room.objects.filter(user_name=user_home)
+    others = Other.objects.filter(user_name=user_home)
+    summary = Summary.objects.filter(user_name=user_home).first()
+    has_staircase = any(floor.staircase for floor in floors)
+
+
+    # Constants
+    WALLS_AREA = 150
+    STAIRS_AREA = 200
+
+    # Floor 1 Area Calculation
+    floor1_area = Room.objects.filter(user_name=user_home, floor_numm=1).aggregate(Sum('room_area'))['room_area__sum'] or 0
+    floor1_area += WALLS_AREA + STAIRS_AREA
+
+    # Cost Calculations
+    total_str_cost = (floor1_area + summary.total_house_area) * 1800 if summary else 0
+    total_room_cost = sum(room.cost for room in rooms) if rooms else 0
+    total_other_cost = sum(other.cost for other in others) if others else 0
+    total_cost = total_room_cost + total_other_cost
+    no_of_floors = summary.no_of_floors if summary else 1
+
+    # Labor Costs
+    total_str_lab_cost = (floor1_area + summary.total_house_area) * 400 if summary else 0
+    total_paint_labor_cost = no_of_floors * 40000
+    total_elec_labor_cost = no_of_floors * 40000
+    number_of_bathrooms = Other.objects.filter(user_name=user_home, finish_type='bathroom').count()
+    number_of_kitchen = Other.objects.filter(user_name=user_home, finish_type='kitchen').count()
+    total_sani_labor_cost = number_of_bathrooms * 14000 + number_of_kitchen * 10000
+    construction_standard = user_home.construction_standard
+    rate_per_square_feet = (total_str_cost + total_cost) / summary.total_house_area if summary else 0
+
+    context = {
+        'user_home': user_home,
+        'location': location,
+        'floors': floors,
+        'has_staircase': has_staircase,
+        'rooms': rooms,
+        'others': others,
+        'summary': summary,
+        'total_cost': total_cost,
+        'current_year': datetime.datetime.now().year, 
+        'total_str_cost': total_str_cost,
+        'total_const_cost': total_str_cost + total_cost,
+        'total_str_lab_cost': total_str_lab_cost,
+        'total_paint_labor_cost': total_paint_labor_cost,
+        'total_elec_labor_cost': total_elec_labor_cost,
+        'total_sani_labor_cost': total_sani_labor_cost,        
+        'construction_standard': construction_standard,        
+        'rate_per_square_feet': rate_per_square_feet        
+    }
+
+    return render(request, 'report.html', context)

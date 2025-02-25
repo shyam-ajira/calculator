@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            color: #333;
+            background-color: #fff;
+            font-size: 12pt;
+        }
+        h1, h2 {
+            color: #222;
+            border-bottom: 1px solid #444;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13pt;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        p {
+            margin: 5px 0;
+        }
+        
+        /* PRINT STYLES */
+        @media print {
+            body {
+                margin: 5mm;
+                font-size: 12pt;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+            h2 {
+                page-break-after: avoid;
+            }
+            th, td {
+                border: 1px solid #666;
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Report for :- {{ user_home.name }}</h1>
+    
+    <h2>Basic Information</h2>
+    <p><strong>Construction Type:</strong> {{ user_home.construction_standard }}</p>
+    <p><strong>Land Area:</strong> {{ user_home.land_area }}</p>
+    <p><strong>Ground Coverage:</strong> {{ user_home.ground_coverage }}</p>
+    <p><strong>Submitted At:</strong> {{ user_home.submitted_at }}</p>
+
+    {% if location %}
+    <h2>Location Details</h2>
+    <p><strong>District:</strong> {{ location.district }}</p>
+    <p><strong>Municipality:</strong> {{ location.municipality }}</p>
+    <p><strong>Contact Number:</strong> {{ location.contact_number }}</p>
+    {% endif %}
+
+    {% if has_staircase %}
+    <h2>Floors</h2>
+    <table>
+        <tr>
+            <th>Floor Number</th>
+            <th>Staircase</th>
+        </tr>
+        {% for floor in floors %}
+            {% if floor.staircase %}
+                <tr>
+                    <td>{{ floor.floor_number }}</td>
+                    <td>Yes</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <h2>Rooms</h2>
+    <table>
+        <tr>
+            <th>Floor</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Flooring Type</th>
+            <th>Room Area</th>
+            <th>Rate</th>
+            <th>Cost</th>
+            <th>Window Area</th>
+        </tr>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.floor_numm }}</td>
+            <td>{{ room.room_type }}</td>
+            <td>{{ room.quantity }}</td>
+            <td>{{ room.flooring_type }}</td>
+            <td>{{ room.room_area }} sqft</td>
+            <td>{{ room.rate }} sqft</td>
+            <td>Rs. {{ room.cost }}</td>
+            <td>{{ room.window_area }} sqft</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Other Features</h2>
+    <table>
+        <tr>
+            <th>Feature Type</th>
+            <th>Material</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Cost</th>
+        </tr>
+        {% for other in others %}
+        <tr>
+            <td>{{ other.finish_type }}</td>
+            <td>{{ other.finish }}</td>
+            <td>{{ other.qty }}</td>
+            <td>Rs. {{ other.rate }}</td>
+            <td>Rs. {{ other.cost }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if summary %}
+    <h2>Summary</h2>
+    <p><strong>Total House Area:</strong> {{ summary.total_house_area }} sqft</p>
+    <p><strong>No. of Floors:</strong> {{ summary.no_of_floors }}</p>
+    <p><strong>Total Carpet Area:</strong> {{ summary.total_carpet_area }} sqft</p>
+    {% endif %}
+
+    <h2>Cost Breakdown</h2>
+    <p><strong>Total Structural Cost:</strong> Rs. {{ total_str_cost }}</p>
+    <p><strong>Total Finishing Cost:</strong> Rs. {{ total_cost }}</p>
+    <p><strong>Total Construction Cost:</strong> Rs. {{ total_const_cost }}</p>
+    <p><strong>Total Structural Labor Cost:</strong> Rs. {{ total_str_lab_cost }}</p>
+    <p><strong>Total Painting Labor Cost:</strong> Rs. {{ total_paint_labor_cost }}</p>
+    <p><strong>Total Electrical Labor Cost:</strong> Rs. {{ total_elec_labor_cost }}</p>
+    <p><strong>Total Sanitary Labor Cost:</strong> Rs. {{ total_sani_labor_cost }}</p>
+    <p><strong>Rate per Sq. Ft.:</strong> Rs. {{ rate_per_square_feet }}</p>
+
+</body>
+</html>

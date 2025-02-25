@@ -8,6 +8,8 @@ urlpatterns = [
     path('flooring/', FlooringView, name='flooring'),  
     path('other/', OtherView, name='other'),  
     path('summary/', SummaryView, name='summary'),  
-    path('result/', ResultView, name='result'),  
+    path('result/', ResultView, name='result'), 
+    path('report/<int:user_id>/', report, name='report'),
+ 
 
 ]
