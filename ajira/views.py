@@ -167,7 +167,8 @@ def ResultView(request):
     numberofbathrooms = Other.objects.filter(user_name=user, finish_type='bathroom').count()
     numberofkitchen = Other.objects.filter(user_name=user, finish_type='kitchen').count()
     total_sani_labor_cost = numberofbathrooms * 14000 + numberofkitchen * 10000
-    print(numberofkitchen  )
+    construction_standard=user.construction_standard
+    rate_per_squire_feet= (total_str_cost + total_cost) / summary.total_house_area
 
     context = {
         'summary': summary,
@@ -178,7 +179,9 @@ def ResultView(request):
         'total_str_lab_cost': total_str_lab_cost,
         'total_paint_labor_cost':total_paint_labor_cost,
         'total_elec_labor_cost': total_elec_labor_cost,
-        'total_sani_labor_cost':total_sani_labor_cost        
+        'total_sani_labor_cost':total_sani_labor_cost,        
+        'construction_standard':construction_standard,        
+        'rate_per_squire_feet':rate_per_squire_feet        
     }
     return render(request, 'result.html', context)
 

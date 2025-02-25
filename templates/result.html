@@ -88,7 +88,7 @@
           <p><strong>Email:</strong> support@ajiragroup.com</p>
           <p><strong>Website: </strong><a href="https://ajiragroup.com/">www.ajiragroup.com</a></p>
         </div>
-        <img src="/static/img/logo.jpeg" alt="Company Logo" class="logo" />
+        <a href="/"><img src="/static/img/logo.jpeg" alt="Company Logo" class="logo" /></a>
         <h1>Approximate Cost for {{ summary.user_name.name }}'s House</h1>
       </div>
       <div class="info">
@@ -102,6 +102,9 @@
         <p>
           <strong>Total Carpet Area:</strong> {{ summary.total_carpet_area }}
           sq. ft.
+        </p>
+        <p>
+          <strong>Construction Standard :</strong> {{ construction_standard|title }}
         </p>
       </div>
 
@@ -121,7 +124,7 @@
           <tr>
             <td>{{ room.room_type|title }}</td>
             <td>{{ room.quantity }}</td>
-            <td>{{ room.flooring_type }}</td>
+            <td>{{ room.flooring_type|title }}</td>
             <td>{{ room.room_area }} sq. ft.</td>
             <td>Rs. {{ room.cost }}</td>
           </tr>
@@ -149,10 +152,7 @@
             <td>Finishing Cost</td>
             <td>Rs. {{ total_cost }}</td>
           </tr>
-          {% comment %} <tr>
-            <td>Total Construction Cost</td>
-            <td>Rs. {{ total_const_cost }}</td>
-          </tr> {% endcomment %}
+         
         </tbody>
       </table>
 
@@ -210,6 +210,7 @@
         </tbody>
       </table>
 
+      <div class="total">Rate Per Square Feet: Rs. {{ rate_per_squire_feet|floatformat:0  }}</div>
       <div class="total">Total Construction Cost: Rs. {{ total_const_cost }}</div>
 
       <div class="footer">
