@@ -10,6 +10,4 @@ urlpatterns = [
     path('summary/', SummaryView, name='summary'),  
     path('result/', ResultView, name='result'), 
     path('report/<int:user_id>/', report, name='report'),
- 
-
 ]

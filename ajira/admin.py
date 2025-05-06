@@ -12,7 +12,7 @@ admin.site.register(Municipality)
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('user_name','district', 'municipality', 'submitted_at')
+    list_display = ('user_name','district','contact_number', 'municipality', 'submitted_at')
     search_fields = ('district', 'municipality')
 
 @admin.register(Floor)

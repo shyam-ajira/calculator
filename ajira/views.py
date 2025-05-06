@@ -5,6 +5,10 @@ from .models import *
 from .forms import *
 import datetime
 from django.db.models import Sum
+import random
+from .utils import send_sms
+from django.conf import settings
+import re
 
 
 # Create your views here.
@@ -58,24 +62,87 @@ def get_municipalities(request, district_id):
     return JsonResponse(list(municipalities), safe=False)
 
 
+def is_valid_number(number):
+    return bool(re.fullmatch(r"9[78]\d{8}", number))
+
+def generate_otp():
+    return str(random.randint(100000, 999999))
+
 def LocationView(request):
     districts = District.objects.all()
-    
-    user_name = Home.objects.latest('submitted_at') 
+    user_name = Home.objects.latest('submitted_at')
+
+    # Step tracking
+    step = request.session.get("step", 1)
 
     if request.method == "POST":
-        district_id = request.POST.get("district")
-        municipality_id = request.POST.get("local-body")
-        contact_number_id = request.POST.get("contact_number")
+        if step == 1:
+            contact_number = request.POST.get("contact_number")
+            otp_input = request.POST.get("otp")
 
-        if district_id and municipality_id and user_name:
+            # If OTP is not submitted yet → send it
+            if not otp_input:
+                if not is_valid_number(contact_number):
+                    messages.error(request, "Invalid phone number.")
+                    return render(request, "location.html", {"step": 1})
+
+                otp = generate_otp()
+                request.session["otp"] = otp
+                request.session["contact_number"] = contact_number
+
+                result = send_sms(contact_number, f"Your OTP for Ajira Builders is: {otp}", settings.SMS_AUTH_TOKEN)
+                if result["status_code"] != 200:
+                    messages.error(request, "Failed to send OTP.")
+                    return render(request, "location.html", {"step": 1})
+
+                messages.success(request, "OTP sent successfully.")
+                return render(request, "location.html", {"step": 1, "show_otp": True})
+
+            else:
+                # Verify OTP
+                if otp_input != request.session.get("otp"):
+                    messages.error(request, "Incorrect OTP. Try again.")
+                    return render(request, "location.html", {"step": 1, "show_otp": True})
+
+                # OTP verified → move to step 2
+                request.session["step"] = 2
+                messages.success(request, "OTP verified.")
+                return redirect("location")
+
+        elif step == 2:
+            district_id = request.POST.get("district")
+            municipality_id = request.POST.get("local-body")
+            contact_number = request.session.get("contact_number")
+
+            if not (district_id and municipality_id and contact_number):
+                messages.error(request, "All fields are required.")
+                return render(request, "location.html", {"step": 2, "districts": districts})
+
             district = District.objects.get(id=district_id)
             municipality = Municipality.objects.get(id=municipality_id)
+            if Location.objects.filter(contact_number=contact_number).exists():
+                messages.error(request, "This contact number has already been used.")
+                return render(request, "location.html", {
+                    "step": 2,
+                    "districts": districts
+                })
 
-            Location.objects.create(user_name=user_name, district=district, municipality=municipality, contact_number=contact_number_id)
+            Location.objects.create(
+                user_name=user_name,
+                contact_number=contact_number,
+                district=district,
+                municipality=municipality
+            )
+
+            # Clear session
+            request.session.flush()
+            messages.success(request, "Location saved successfully.")
             return redirect("flooring")
 
-    return render(request, "location.html", {"districts": districts})
+    return render(request, "location.html", {
+        "step": step,
+        "districts": districts if step == 2 else None
+    })
 
 
 def FlooringView(request):
