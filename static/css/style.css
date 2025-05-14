@@ -388,25 +388,6 @@ label {
     font-size: 14px; /* Adjust the size as needed */
 }
 
-
-/* Media query for responsiveness (example) */
-@media (max-width: 450px) {
-    .container {
-        width: 90%;
-        padding: 20px;
-    }
-
-    .input-group label {
-        flex-direction: column; /* Stack label and icon vertically */
-        align-items: flex-start;
-    }
-
-    .input-group label img {
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
-}
-
 /* Add the following CSS without changing the existing styles */
 
 /* Styles for the Area Calculation Page */
@@ -525,4 +506,89 @@ input:checked + .slider:before {
     min-height: 40px; /* Add a minimum height */
     font-size: 16px; /* Increase font size for better readability */
     text-decoration: none;
+}
+
+@media (max-width: 450px) {
+
+    body {
+        background-position: center;
+        background-size: cover;
+        padding: 10px;
+    }
+
+    .container {
+        min-width: unset;
+        width: 100%;
+        padding: 20px 15px;
+        border-radius: 10px;
+    }
+
+    .logo-image {
+        width: 200px;
+        height: auto;
+    }
+
+    .form-group input,
+    .form-group select,
+    .button,
+    .submit-button,
+    .next-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .form-group label,
+    label,
+    .floor-selector label,
+    .unit-label {
+        font-size: 13px;
+    }
+
+    .room-table th, 
+    .room-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .quantity-control button,
+    .add-floor {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .cost-info-button {
+        font-size: 14px;
+        padding: 8px 12px;
+        min-width: 100%;
+    }
+
+    .floor-button {
+        width: 100%;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .input-group label {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 14px;
+    }
+
+    .image-area {
+        text-align: center;
+    }
+
+    .house-image {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .unit-toggle {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

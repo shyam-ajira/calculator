@@ -41,10 +41,7 @@ def HomeView(request):
             messages.error(request, f"Ground coverage must not exceed 70% of the land.")
             return redirect('home')
         
-        existing_home = Home.objects.filter(name=name).first()
-        if existing_home:
-            messages.error(request, "Name already exists.")
-            return render(request, 'home.html')
+        
 
         new_home = Home(
             name=name,
@@ -80,10 +77,15 @@ def LocationView(request):
             contact_number = request.POST.get("contact_number")
             otp_input = request.POST.get("otp")
 
-            # If OTP is not submitted yet → send it
+            # Step 1 - Requesting OTP
             if not otp_input:
                 if not is_valid_number(contact_number):
                     messages.error(request, "Invalid phone number.")
+                    return render(request, "location.html", {"step": 1})
+
+                # ✅ Check if contact number already exists
+                if Location.objects.filter(contact_number=contact_number).exists():
+                    messages.error(request, "This contact number has already been used.")
                     return render(request, "location.html", {"step": 1})
 
                 otp = generate_otp()
@@ -98,8 +100,8 @@ def LocationView(request):
                 messages.success(request, "OTP sent successfully.")
                 return render(request, "location.html", {"step": 1, "show_otp": True})
 
+            # Step 1 - Verifying OTP
             else:
-                # Verify OTP
                 if otp_input != request.session.get("otp"):
                     messages.error(request, "Incorrect OTP. Try again.")
                     return render(request, "location.html", {"step": 1, "show_otp": True})
@@ -120,12 +122,11 @@ def LocationView(request):
 
             district = District.objects.get(id=district_id)
             municipality = Municipality.objects.get(id=municipality_id)
+
+            # Double-check in case of session tampering
             if Location.objects.filter(contact_number=contact_number).exists():
                 messages.error(request, "This contact number has already been used.")
-                return render(request, "location.html", {
-                    "step": 2,
-                    "districts": districts
-                })
+                return render(request, "location.html", {"step": 2, "districts": districts})
 
             Location.objects.create(
                 user_name=user_name,

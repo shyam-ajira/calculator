@@ -13,7 +13,7 @@ class Home(models.Model):
         ('4.5-5.0', '4.5 to 5.0 aana'),
         ('> 5.0', 'Greater than 5 aana'),
     ]
-    name = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    name = models.CharField(max_length=255,null=True, blank=True)
     land_area = models.CharField(max_length=20, choices=LAND_AREA_CHOICES)
     ground_coverage = models.FloatField(max_length=50)
     construction_standard = models.CharField(max_length=20, choices=STATUS_CHOICES)
